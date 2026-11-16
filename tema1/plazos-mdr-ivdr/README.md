@@ -35,11 +35,13 @@ La página también muestra los hitos como JSON, para revisarlos sin leer el có
 
 Las mejoras, los casos para practicar y los errores se recogen en las *issues* del repositorio o por correo a cesar.sanchez@uclm.es.
 
-## Licencias
+## Licencia
 
-- Código: EUPL-1.2.
-- Textos, plazos y datos: CC BY 4.0.
-- El logotipo de la UCLM queda excluido de ambas licencias.
+© 2026 César Sánchez Meléndez.
+
+Este material se publica con licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0). Puedes copiarlo, adaptarlo y redistribuirlo citando la autoría y compartiendo tus versiones con la misma licencia. La licencia cubre también el código. El texto completo está en el archivo `LICENSE` de la raíz del repositorio.
+
+El logotipo de la UCLM queda excluido.
 
 ## Uso de inteligencia artificial
 

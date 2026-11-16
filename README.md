@@ -32,8 +32,10 @@ El Clasificador de productos sanitarios MDR/IVDR tiene su propio repositorio (`c
 
 Las mejoras, los casos para practicar y los errores se recogen en las *issues* de este repositorio o por correo a cesar.sanchez@uclm.es.
 
-## Licencias
+## Licencia
 
-- Página de entrada (`index.html` de la raíz): CC BY-SA 4.0.
-- Cada recurso indica su licencia en su README. El Calendario de plazos usa EUPL-1.2 para el código y CC BY 4.0 para los textos y los datos.
-- El logotipo de la UCLM queda excluido de todas ellas.
+© 2026 César Sánchez Meléndez.
+
+Este material se publica con licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0). Puedes copiarlo, adaptarlo y redistribuirlo citando la autoría y compartiendo tus versiones con la misma licencia.
+
+La licencia cubre todos los recursos del repositorio, código incluido. El texto completo está en el archivo `LICENSE`. El logotipo de la UCLM queda excluido. El Clasificador, que está en su propio repositorio, tiene sus propias licencias.
