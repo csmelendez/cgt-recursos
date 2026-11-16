@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recursos interactivos · Calidad y Gestión en Tecnología Sanitaria (GIB)</title>
+<meta name="description" content="Herramientas en abierto de la asignatura Calidad y Gestión en Tecnología Sanitaria (UCLM): clasificador de productos sanitarios MDR/IVDR y calendario de plazos MDR/IVDR y EUDAMED.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* Misma plantilla que la página de recursos de Evaluación de Tecnología Sanitaria. */
+:root{
+  --granate:#A3002F; --granate-claro:#F7E4E9; --verde:#25695C; --pizarra:#35577A; --ambar:#B4621B;
+  --tinta:#2A2125; --gris:#6C6266; --linea:#DED6D9; --papel:#FFFFFF; --fondo:#F6F3F4;
+  --f-disp:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --f-cuerpo:"IBM Plex Sans",Arial,Helvetica,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--f-cuerpo);line-height:1.5}
+.franja{height:6px;background:var(--granate)}
+.portada{background:var(--papel);border-bottom:1px solid var(--linea)}
+.portada .in{max-width:1120px;margin:0 auto;padding:34px 28px 34px}
+.cab{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center;justify-content:space-between;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--linea)}
+.cab img{height:62px;width:auto;display:block}
+.ficha{flex:1 1 440px;max-width:620px;background:var(--fondo);border-left:4px solid var(--granate);border-radius:0 10px 10px 0;padding:12px 16px}
+.ficha dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px;margin:0}
+.ficha dt{font:600 11px var(--f-cuerpo);letter-spacing:.07em;text-transform:uppercase;color:var(--gris)}
+.ficha dd{margin:0;font-weight:600;font-size:14px;line-height:1.3}
+.ficha .ancho{grid-column:1/-1}
+.etq{font:600 14px var(--f-disp);letter-spacing:.08em;text-transform:uppercase;color:var(--granate)}
+h1{font:700 44px/1.05 var(--f-disp);margin:10px 0 14px;max-width:22ch;text-wrap:balance}
+.intro{font-size:17px;max-width:70ch;margin:0;color:#43393D}
+.datos{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;font-size:13.5px;color:var(--gris)}
+.datos b{color:var(--tinta);font-weight:600}
+.indice{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.indice a{font:600 13.5px var(--f-cuerpo);color:var(--granate);text-decoration:none;border:1px solid var(--granate);border-radius:999px;padding:5px 13px}
+.indice a:hover{background:var(--granate);color:#fff}
+main{max-width:1120px;margin:0 auto;padding:12px 28px 40px}
+section{margin-top:34px}
+section h2{font:700 28px var(--f-disp);margin:0 0 4px}
+section .sub{color:var(--gris);margin:0 0 16px;font-size:15px;max-width:72ch}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.tarjeta{display:flex;flex-direction:column;background:var(--papel);border:1px solid var(--linea);border-radius:12px;padding:18px 20px 16px;text-decoration:none;color:inherit;border-top:5px solid var(--granate);transition:box-shadow 200ms,transform 200ms}
+a.tarjeta:hover{box-shadow:0 10px 24px rgba(60,20,30,.12);transform:translateY(-2px)}
+a.tarjeta:focus-visible{outline:3px solid var(--ambar);outline-offset:3px}
+.tarjeta .tipo{font:600 11.5px var(--f-cuerpo);letter-spacing:.08em;text-transform:uppercase;color:var(--gris);margin-bottom:4px}
+.tarjeta h3{font:700 22px/1.12 var(--f-disp);margin:0 0 6px}
+.tarjeta p{margin:0;font-size:14.5px}
+.tarjeta .uso{margin-top:10px;font-size:13.5px;color:#43393D;background:var(--fondo);border-radius:8px;padding:8px 10px}
+.tarjeta .uso b{font-weight:600}
+.tarjeta .pie{margin-top:auto;padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--gris)}
+.tarjeta .ir{font:600 13.5px var(--f-cuerpo);color:var(--granate)}
+.tarjeta.reg{border-top-color:var(--pizarra)} .tarjeta.reg .ir{color:var(--pizarra)}
+.trans .tarjeta{border-top-color:var(--verde)} .trans .tarjeta .ir{color:var(--verde)}
+footer{border-top:1px solid var(--linea);background:var(--papel)}
+footer .in{max-width:1120px;margin:0 auto;padding:18px 28px;font-size:13px;color:var(--gris)}
+footer a{color:var(--granate)}
+@media (max-width:600px){h1{font-size:34px}.portada .in{padding:24px 18px}main{padding:8px 18px 30px}.ficha dl{grid-template-columns:1fr}.cab img{height:50px}}
+</style>
+</head>
+<body>
+<div class="franja" aria-hidden="true"></div>
+<div class="portada"><div class="in">
+  <div class="cab">
+    <img src="logo-uclm.png" alt="Universidad de Castilla-La Mancha" width="520" height="225">
+    <div class="ficha"><dl>
+      <div><dt>Asignatura</dt><dd>Calidad y Gestión en Tecnología Sanitaria (59718)</dd></div>
+      <div><dt>Plan de estudios</dt><dd>Grado en Ingeniería Biomédica (422)</dd></div>
+      <div><dt>Centro</dt><dd>Escuela Politécnica de Cuenca</dd></div>
+      <div><dt>Curso</dt><dd>2.º curso, primer cuatrimestre, 2026-27</dd></div>
+      <div class="ancho"><dt>Profesor</dt><dd>César Sánchez Meléndez · cesar.sanchez@uclm.es</dd></div>
+    </dl></div>
+  </div>
+  <div class="etq">Grado en Ingeniería Biomédica · Calidad y Gestión en Tecnología Sanitaria</div>
+  <h1>Recursos interactivos de Calidad y Gestión en Tecnología Sanitaria</h1>
+  <p class="intro">Herramientas para trabajar en clase, y practicar después, la parte de la asignatura con más carga normativa: qué es un producto sanitario, qué reglamento y qué clase le corresponden, y qué plazos tiene que cumplir para seguir en el mercado.</p>
+  <p class="intro" style="margin-top:10px">La asignatura tiene tres temas: <b>Tema 1</b>, Introducción a la gestión de la tecnología sanitaria; <b>Tema 2</b>, El servicio de Ingeniería Clínica; y <b>Tema 3</b>, Gestión de la calidad en tecnología sanitaria.</p>
+  <div class="datos"><span><b>Normativa comprobada:</b> noviembre de 2026</span><span><b>Última revisión:</b> noviembre de 2026</span></div>
+  <nav class="indice" aria-label="Secciones"><a href="#tema1">Tema 1 · Regulación de productos sanitarios</a><a href="#transversal">Herramientas de otras asignaturas</a></nav>
+</div></div>
+
+<main>
+  <section id="tema1">
+    <h2>Tema 1 · Regulación de productos sanitarios</h2>
+    <p class="sub">El MDR y el IVDR en la práctica: cualificar y clasificar un producto, y saber qué plazos de transición y de EUDAMED le afectan.</p>
+    <div class="rejilla">
+      <a class="tarjeta" href="https://www.cesarsanchezmelendez.es/clasificaMD/">
+        <div class="tipo">Herramienta · Cualificación y clasificación</div>
+        <h3>Clasificador de productos sanitarios MDR/IVDR</h3>
+        <p>Decide si un producto es sanitario, qué reglamento le corresponde y su clase de riesgo según el Anexo VIII, con la regla que lo determina y la categoría EMDN. Cada resultado cita el artículo, la regla y la guía en que se apoya.</p>
+        <div class="uso"><b>Cuándo:</b> Tema 1, al estudiar las definiciones del MDR y el IVDR y la clasificación por reglas. Conviene usarlo antes del calendario: la clase decide el plazo.</div>
+        <div class="pie"><span>MDR e IVDR · 113 casos resueltos</span><span class="ir">Abrir →</span></div>
+      </a>
+      <a class="tarjeta reg" href="tema1/plazos-mdr-ivdr/index.html">
+        <div class="tipo">Herramienta · Transición y EUDAMED</div>
+        <h3>Calendario de plazos MDR/IVDR</h3>
+        <p>Separa en tres relojes las fechas que suelen mezclarse: hasta cuándo puede introducirse en el mercado un producto heredado, qué tiene que constar en EUDAMED y desde cuándo, y en qué punto está la revisión de los reglamentos. Incluye un comprobador por producto, casos y errores frecuentes.</p>
+        <div class="uso"><b>Cuándo:</b> Tema 1, apartado de transición MDR e IVDR, productos <i>legacy</i> y EUDAMED. Los casos corresponden a los ejercicios de mapa de transición de los apuntes.</div>
+        <div class="pie"><span>3 relojes · 6 casos · 7 errores frecuentes</span><span class="ir">Abrir →</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section id="transversal" class="trans">
+    <h2>Herramientas de otras asignaturas</h2>
+    <p class="sub">Recursos de otras asignaturas del grado que también sirven aquí.</p>
+    <div class="rejilla">
+      <a class="tarjeta" href="https://www.cesarsanchezmelendez.es/ets-recursos/">
+        <div class="tipo">Colección · Evaluación de Tecnología Sanitaria (59728)</div>
+        <h3>Recursos interactivos de Evaluación de Tecnología Sanitaria</h3>
+        <p>Presentaciones, ejercicios y herramientas sobre cómo se decide si una tecnología sanitaria se incorpora al sistema: búsqueda y valoración de la evidencia, impacto y decisión.</p>
+        <div class="uso"><b>Cuándo:</b> para ver qué pasa después del marcado CE, cuando una tecnología ya puede venderse y alguien tiene que decidir si se financia o se compra.</div>
+        <div class="pie"><span>4.º curso</span><span class="ir">Abrir →</span></div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer><div class="in">Material docente de apoyo. Las páginas resumen la normativa con fines didácticos y no sustituyen la consulta del Diario Oficial de la Unión Europea ni del Boletín Oficial del Estado. Antes de usarlas, comprueba que no se ha publicado una norma posterior. El Clasificador y el Calendario se abren en su propia web, con su propio repositorio y sus licencias.<br><span style="display:inline-block;margin-top:6px">© 2026 César Sánchez Meléndez. Material publicado con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)</a>.</span></div></footer>
+</body>
+</html>
