@@ -6,45 +6,30 @@ Recurso docente en abierto sobre los plazos de la regulación de productos sanit
 2. **EUDAMED**: qué tiene que constar en la base de datos y desde cuándo (Reglamento (UE) 2024/1860 y Decisión (UE) 2025/2371).
 3. **Revisión**: la propuesta COM(2025) 1023, en tramitación.
 
-Asignatura: Calidad y Gestión en Tecnología Sanitaria (59718), Tema 1.
+Incluye una línea temporal interactiva, un comprobador de plazos por producto, casos para practicar que se cargan en el comprobador y un bloque de errores frecuentes.
+
+Asignatura: Calidad y Gestión en Tecnología Sanitaria (59718).
 
 Autor: César Sánchez Meléndez · Escuela Politécnica de Cuenca, Universidad de Castilla-La Mancha.
 
-## Escenas
-
-Sigue el formato de las presentaciones de la colección de Evaluación de Tecnología Sanitaria: nueve escenas, algunas con varios pasos.
-
-| # | Escena | Qué hay |
-|---|--------|---------|
-| 1 | Tres relojes | Las tres preguntas y la confusión más habitual |
-| 2 | Introducir no es comercializar | Definiciones del art. 2 del MDR y supresión del *sell-off* |
-| 3 | Reloj 1 · Transición MDR | Línea temporal, grupos de clases y condiciones |
-| 4 | Reloj 1 · Transición IVDR | Tabla de hitos por grupo |
-| 5 | Reloj 2 · EUDAMED | Línea temporal, módulos obligatorios y quién registra qué |
-| 6 | Reloj 3 · Revisión | Estado del procedimiento 2025/0404(COD) |
-| 7 | ¿Qué plazos afectan a mi producto? | Comprobador con seis casos y solución comentada |
-| 8 | Errores frecuentes | Siete afirmaciones de verdadero o falso |
-| 9 | Antes de dar por buena una fecha | Lista de comprobación, colaboraciones, licencia y uso de IA |
-
 ## Uso
 
-Es una sola página (`index.html`) sin dependencias, salvo las fuentes de Google Fonts. Forma parte del repositorio `cgt-recursos` y se sirve en `www.cesarsanchezmelendez.es/cgt-recursos/tema1/plazos-mdr-ivdr/`.
+Es una sola página (`index.html`) sin dependencias ni servidor. Forma parte del repositorio `cgt-recursos` y se sirve en `www.cesarsanchezmelendez.es/cgt-recursos/tema1/plazos-mdr-ivdr/`.
 
-Se navega con las flechas del teclado, con los botones «Anterior» y «Siguiente» o pulsando en el escenario. La tecla F activa la pantalla completa. En las escenas 7 y 8 las flechas no avanzan mientras se usan los controles.
+Usa el logotipo de la raíz del repositorio (`../../logo-uclm.png`).
 
 ## Actualizar los plazos
 
-Los datos están en el primer script de `index.html`:
+Todos los datos están al principio del script de `index.html`:
 
-- `REVISADO`: fecha de la última revisión de la normativa.
-- `F`: enlaces a EUR-Lex y a los documentos de la Comisión que aparecen como fuente.
-- `ESCENAS`: título, pregunta, texto, fuente y número de pasos de cada escena.
-- `PREG` y `evaluar()`: preguntas y reglas del comprobador.
-- `CASOS`: casos para practicar, con las respuestas que cargan en el comprobador y su solución.
-- `MITOS`: afirmaciones del bloque de errores frecuentes.
-- Las llamadas a `lineaTemporal()` al final del script: fechas de las líneas temporales de las escenas 3 y 5.
+- `REVISADO`: fecha de la última revisión de la normativa (aparece en la cabecera).
+- `HITOS`: cada fecha de la línea temporal, con su explicación, base legal y fuente.
+- `FUENTES`: enlaces a EUR-Lex y a los documentos de la Comisión.
+- `CASOS`: casos para practicar, con las respuestas que cargan en el comprobador y su solución comentada.
+- `MITOS`: afirmaciones de verdadero o falso del bloque de errores frecuentes.
+- `REPO` y `CARPETA`: repositorio y carpeta del recurso, para los enlaces de «Proponer una mejora» y «Ver el código».
 
-Las fechas que aparecen como texto en las escenas 3 a 6 están en el HTML de cada escena. Si cambia un plazo, hay que cambiarlo en los dos sitios.
+La página también muestra los hitos como JSON, para revisarlos sin leer el código.
 
 ## Propuestas y errores
 

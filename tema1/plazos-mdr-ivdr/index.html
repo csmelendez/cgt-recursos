@@ -2,420 +2,476 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendario de plazos MDR/IVDR: transición, EUDAMED y revisión</title>
-<meta name="description" content="Recurso docente en abierto: los tres relojes de la regulación de productos sanitarios (transición MDR/IVDR, EUDAMED y revisión de los reglamentos), con un comprobador de plazos por producto, casos y errores frecuentes.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Calendario de plazos MDR/IVDR</title>
+<meta name="description" content="Recurso docente en abierto: los tres relojes de la regulación de productos sanitarios (transición MDR/IVDR, EUDAMED y revisión de los reglamentos) y un comprobador de plazos por producto.">
+<meta property="og:locale" content="es_ES">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
+/* Misma familia visual que el Clasificador MDR/IVDR y el Buscador de evidencia PICO (paleta UCLM). */
 :root{
-  /* Misma base que las presentaciones de la colección de ETS.
-     Pizarra para el reloj 1 (transición), granate para el reloj 2 (EUDAMED) y verde para el reloj 3 (revisión). */
-  --granate:#A3002F; --granate-claro:#F7E4E9;
-  --verde:#25695C; --verde-claro:#E1EFEB;
-  --ambar:#B4621B; --ambar-claro:#F6EADF;
-  --rojo:#B3261E; --rojo-claro:#F8E1DF;
-  --pizarra:#35577A; --pizarra-claro:#E3EAF2;
-  --tinta:#2A2125; --gris:#6C6266; --linea:#DED6D9; --papel:#FFFFFF; --fondo:#F6F3F4;
-  --f-disp:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
-  --f-cuerpo:"IBM Plex Sans",Arial,Helvetica,sans-serif;
-  color-scheme:light;
+  --bg:#f6f7fa; --surface:#ffffff; --ink:#28363c; --muted:#56656c; --line:#dadfe2; --band:#e9edf0;
+  --accent:#b30033; --accent-soft:#f8e6ec; --accent-strong:#9c1c1c;
+  --ctrl:#2f5d8a; --ctrl-soft:#e6eef6;      /* reloj 1: transición */
+  --rev:#3f7a52; --rev-soft:#e7f2ea;        /* reloj 3: revisión */
+  --ok:#23794f; --warn:#a77a05; --bad:#8c1d18; --code-bg:#f0f2f5; --logo-plate:transparent;
+  --font-display:"Archivo Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-ui:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-law:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --font-code:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121719; --surface:#1b2226; --ink:#e7ecee; --muted:#9aa8ae; --line:#2c373c; --band:#222b30;
+    --accent:#f27c96; --accent-soft:#3a1520; --accent-strong:#f7a3b5;
+    --ctrl:#8db8e3; --ctrl-soft:#18283a; --rev:#7fcf98; --rev-soft:#16281d;
+    --ok:#58c491; --warn:#e2b743; --bad:#ef5a4a; --code-bg:#151b1e; --logo-plate:#ffffff;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121719; --surface:#1b2226; --ink:#e7ecee; --muted:#9aa8ae; --line:#2c373c; --band:#222b30;
+  --accent:#f27c96; --accent-soft:#3a1520; --accent-strong:#f7a3b5;
+  --ctrl:#8db8e3; --ctrl-soft:#18283a; --rev:#7fcf98; --rev-soft:#16281d;
+  --ok:#58c491; --warn:#e2b743; --bad:#ef5a4a; --code-bg:#151b1e; --logo-plate:#ffffff;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0}
-body{background:var(--fondo);color:var(--tinta);font-family:var(--f-cuerpo);display:flex;flex-direction:column}
-header{display:flex;align-items:center;gap:20px;padding:12px 24px;background:var(--papel);border-bottom:1px solid var(--linea);flex-wrap:wrap}
-.volver{font:600 13px var(--f-cuerpo);color:var(--granate);text-decoration:none;border:1px solid var(--granate);border-radius:999px;padding:4px 11px}
-.volver:hover{background:var(--granate);color:#fff}
-.marca{font-family:var(--f-disp);font-weight:700;color:var(--granate);font-size:15px;letter-spacing:.02em}
-.marca span{color:var(--gris);font-weight:500}
-nav.puntos{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
-nav.puntos button{font:500 13px var(--f-cuerpo);border:1px solid var(--linea);background:var(--papel);color:var(--gris);border-radius:999px;padding:5px 11px;cursor:pointer}
-nav.puntos button[aria-current="step"]{background:var(--granate);border-color:var(--granate);color:#fff}
-button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--ambar);outline-offset:2px}
-main{flex:1;display:grid;grid-template-columns:minmax(280px,360px) 1fr;min-height:0}
-aside{padding:28px 26px 20px;display:flex;flex-direction:column;gap:12px;background:var(--papel);border-right:1px solid var(--linea);overflow:auto}
-.num{font-family:var(--f-disp);font-weight:600;color:var(--granate);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
-aside h1{font-family:var(--f-disp);font-weight:700;font-size:38px;line-height:1.02;margin:0;text-wrap:balance}
-.pregunta{font-size:19px;font-style:italic;color:var(--granate);margin:0}
-.cuerpo{font-size:16px;line-height:1.55;margin:0;max-width:62ch}
-.fuente{font-size:12.5px;color:var(--gris);margin-top:auto;border-top:1px solid var(--linea);padding-top:10px;line-height:1.45}
-.fuente a{color:var(--granate)}
-.ctl{display:flex;gap:8px;align-items:center}
-.ctl button{font:600 14px var(--f-cuerpo);border:1px solid var(--granate);background:var(--papel);color:var(--granate);border-radius:6px;padding:8px 14px;cursor:pointer}
-.ctl button.prim{background:var(--granate);color:#fff}
-.ctl button:disabled{opacity:.35;cursor:default}
-.ctl .paso{font-size:12.5px;color:var(--gris);margin-left:6px;font-variant-numeric:tabular-nums}
-.marco{position:relative;min-height:0;overflow:hidden;cursor:pointer}
-.stage{position:absolute;left:0;top:0;width:1000px;height:640px;transform-origin:0 0}
-.esc{position:absolute;left:0;top:0;width:1000px;height:640px;opacity:0;pointer-events:none;transition:opacity 500ms ease}
-.int{cursor:auto}
-.fade{opacity:0;transition:opacity 600ms ease,transform 600ms ease;transform:translateY(8px)}
-.fade.on{opacity:1;transform:none}
-.card{background:var(--papel);border:1px solid var(--linea);border-radius:10px;box-shadow:0 6px 20px rgba(60,20,30,.08);padding:16px 18px}
-.tipo{font:600 12px var(--f-cuerpo);letter-spacing:.08em;text-transform:uppercase;color:var(--gris)}
-.banda{position:absolute;left:30px;width:940px;padding:13px 18px;border-left:4px solid var(--granate);background:var(--papel);border-radius:0 8px 8px 0;font-size:15.5px;line-height:1.45}
-.banda.piz{border-left-color:var(--pizarra)} .banda.ver{border-left-color:var(--verde)} .banda.amb{border-left-color:var(--ambar)}
-.lbl{font:600 12px var(--f-cuerpo);letter-spacing:.08em;text-transform:uppercase;color:var(--gris);margin:0 0 6px}
-.bt{font:600 12.5px var(--f-cuerpo);border:1px solid var(--linea);background:var(--papel);color:var(--tinta);border-radius:999px;padding:4px 10px;cursor:pointer;white-space:nowrap}
-.bt:hover{border-color:var(--granate)}
-.bt[aria-pressed="true"]{background:var(--granate);border-color:var(--granate);color:#fff}
-.bt.ok{background:var(--verde);border-color:var(--verde);color:#fff}
-.bt.mal{background:var(--rojo);border-color:var(--rojo);color:#fff}
-.acc{font:600 14px var(--f-cuerpo);border:1px solid var(--granate);background:var(--granate);color:#fff;border-radius:6px;padding:7px 14px;cursor:pointer;text-decoration:none;display:inline-block}
-.acc.sec{background:var(--papel);color:var(--granate)}
-.acc:disabled{opacity:.4;cursor:default}
-.fb{border-radius:8px;padding:10px 14px;font-size:14.5px;line-height:1.45;background:var(--fondo);border-left:4px solid var(--gris)}
-.fb.ok{background:var(--verde-claro);border-left-color:var(--verde)}
-.fb.mal{background:var(--rojo-claro);border-left-color:var(--rojo)}
-.fb.neu{background:var(--ambar-claro);border-left-color:var(--ambar)}
-.fb b{font-weight:600}
-.marcador{font:600 13.5px var(--f-cuerpo);color:var(--gris)}
-.marcador b{color:var(--tinta)}
-.chip{font:600 11px var(--f-cuerpo);letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:2px 8px;white-space:nowrap}
-.chip.pasado{background:var(--fondo);color:var(--gris)}
-.chip.proximo{background:var(--ambar-claro);color:var(--ambar)}
-.chip.futuro{background:var(--pizarra-claro);color:var(--pizarra)}
-.chip.sin{background:var(--verde-claro);color:var(--verde)}
-.chip.no{background:var(--rojo-claro);color:var(--rojo)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.5}
+.wrap{max-width:1220px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 64px}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--font-code);font-size:.82rem}
+.eyebrow{font-family:var(--font-code);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.franja{height:6px;background:var(--accent)}
 
-/* Escena 1: los tres relojes */
-.rel{position:absolute;top:24px;width:300px;height:206px;border-radius:10px;background:var(--papel);border:1px solid var(--linea);border-top:6px solid var(--c);padding:16px 18px;display:flex;flex-direction:column;gap:8px}
-.rel b{font:700 28px/1.05 var(--f-disp);color:var(--c)}
-.rel .q{font-size:16px;line-height:1.4;font-style:italic}
-.rel .norma{margin-top:auto;font-size:13px;color:var(--gris);line-height:1.35}
-.c1{--c:var(--pizarra)} .c2{--c:var(--granate)} .c3{--c:var(--verde)}
+/* Cabecera institucional */
+header.top{display:grid;gap:10px;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:26px}
+header.top h1{font-family:var(--font-display);font-size:clamp(1.8rem,3.8vw,2.6rem);line-height:1.08;margin:0;font-weight:700;text-wrap:balance}
+header.top > p{margin:0;color:var(--muted);max-width:76ch}
+.marca{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px;padding-bottom:18px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.marca .logo{display:block;flex:0 0 auto;background:var(--logo-plate);border-radius:8px;padding:4px 8px;margin-left:-8px}
+.marca .logo img{display:block;height:64px;width:auto}
+.ficha{display:grid;gap:8px;min-width:0;flex:1 1 420px;max-width:640px;background:var(--band);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 16px}
+.ficha .sello{font-family:var(--font-display);font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.ficha dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px;margin:0}
+.ficha dl div{min-width:0}
+.ficha dt{font-family:var(--font-code);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ficha dd{margin:0;font-weight:600;font-size:.9rem;line-height:1.3}
+.ficha .ancho{grid-column:1 / -1}
+.ficha .correo{font-weight:500;overflow-wrap:anywhere;user-select:all}
+@media (max-width:520px){.ficha dl{grid-template-columns:minmax(0,1fr)}.marca .logo img{height:52px}}
 
-/* Escena 2: introducir y comercializar */
-.eslabon{position:absolute;top:150px;width:190px;height:110px;border-radius:10px;background:var(--papel);border:1px solid var(--linea);padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:4px;text-align:center}
-.eslabon b{font:700 21px/1.1 var(--f-disp)}
-.eslabon small{font-size:12.5px;color:var(--gris)}
-.flecha{position:absolute;top:196px;height:18px;font:700 20px var(--f-disp);color:var(--gris);text-align:center}
-.tramo{position:absolute;min-height:64px;border-radius:8px;padding:8px 12px;font-size:13.5px;line-height:1.35}
-.tramo b{display:block;font:700 17px var(--f-disp)}
-.tramo.intro{top:66px;background:var(--granate-claro);border:1px solid var(--granate)}
-.tramo.intro b{color:var(--granate)}
-.tramo.com{top:288px;background:var(--pizarra-claro);border:1px solid var(--pizarra)}
-.tramo.com b{color:var(--pizarra)}
+.indice{display:flex;flex-wrap:wrap;gap:8px}
+.indice a{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:.88rem;font-weight:600}
+.indice a span{font-family:var(--font-code);font-size:.72rem;color:var(--muted);font-weight:400}
+.indice a:hover{border-color:var(--accent)}
 
-/* Líneas temporales (escenas 3 y 5) */
-.tl{position:absolute;left:30px;width:940px}
-.tl svg{display:block;width:940px;height:auto;overflow:visible}
-.tl text{font-family:var(--f-cuerpo)}
-.grupo{position:absolute;width:458px;border-radius:10px;background:var(--papel);border:1px solid var(--linea);border-left:5px solid var(--pizarra);padding:12px 16px}
-.grupo h3{margin:0 0 4px;font:700 22px/1.1 var(--f-disp);color:var(--pizarra)}
-.grupo p{margin:0;font-size:14px;line-height:1.42}
-.conds{position:absolute;left:30px;width:940px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.conds div{background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:8px 12px;font-size:14px;line-height:1.38;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.conds div span.f{font:600 12.5px var(--f-cuerpo);color:var(--pizarra);white-space:nowrap}
+section.sec{display:grid;gap:16px;margin-bottom:44px;scroll-margin-top:16px}
+section.sec > header h2{font-family:var(--font-display);font-size:1.6rem;margin:0;line-height:1.15}
+section.sec > header p{margin:4px 0 0;color:var(--muted);max-width:78ch}
+.num-sec{font-family:var(--font-code);font-size:.78rem;color:var(--accent);letter-spacing:.06em}
 
-/* Escena 4: tabla IVDR */
-table.tabla{position:absolute;left:30px;top:24px;width:940px;border-collapse:separate;border-spacing:0;background:var(--papel);border:1px solid var(--linea);border-radius:10px;overflow:hidden}
-table.tabla th{font:600 11.5px var(--f-cuerpo);letter-spacing:.07em;text-transform:uppercase;color:var(--gris);text-align:left;padding:9px 12px;background:var(--fondo);border-bottom:1px solid var(--linea)}
-table.tabla td{font-size:14.5px;line-height:1.35;padding:11px 12px;border-top:1px solid var(--linea);vertical-align:top}
-table.tabla tr:nth-child(2) td{border-top:0}
-table.tabla td:first-child{font:700 17px/1.15 var(--f-disp);color:var(--pizarra);width:230px}
-table.tabla td.fin{font-weight:600;color:var(--pizarra)}
-table.tabla tr.sin td{color:var(--gris)}
+.bloque{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:12px;min-width:0}
+.bloque > h3{margin:0;font-size:1rem}
+.help{font-family:var(--font-law);font-size:.95rem;color:var(--muted);margin:0;max-width:78ch}
 
-/* Escena 5: módulos y casos de registro */
-.mods{position:absolute;left:30px;width:940px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.mods div{border-radius:8px;padding:9px 12px;font-size:14px;line-height:1.35;border:1px solid var(--linea);background:var(--papel)}
-.mods div.si{border-color:var(--granate);background:var(--granate-claro)}
-.mods div b{display:block;font:700 16px var(--f-disp)}
-.quien{position:absolute;left:30px;width:940px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.quien div{background:var(--papel);border:1px solid var(--linea);border-top:4px solid var(--granate);border-radius:8px;padding:10px 12px;font-size:13.5px;line-height:1.38}
-.quien div b{display:block;font:700 16px/1.15 var(--f-disp);margin-bottom:4px}
-.quien div .r{display:block;margin-top:6px;font-weight:600;color:var(--granate)}
+/* Relojes: leyenda y controles */
+.relojes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:820px){.relojes{grid-template-columns:minmax(0,1fr)}}
+.reloj{display:grid;gap:4px;padding:12px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);border-top:4px solid var(--c)}
+.reloj b{font-family:var(--font-display);font-size:1.08rem;color:var(--c)}
+.reloj span{font-size:.88rem;color:var(--muted)}
+.reloj .q{font-family:var(--font-law);font-size:.98rem;color:var(--ink)}
+.r1{--c:var(--ctrl)} .r2{--c:var(--accent)} .r3{--c:var(--rev)}
 
-/* Escena 6: procedimiento legislativo */
-.proc{position:absolute;left:30px;top:150px;width:940px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.proc div{position:relative;background:var(--papel);border:1px solid var(--linea);border-radius:10px;padding:12px 14px;min-height:112px;font-size:13.5px;line-height:1.38}
-.proc div b{display:block;font:700 17px/1.15 var(--f-disp);margin-bottom:4px}
-.proc div.hecho{border-color:var(--verde);background:var(--verde-claro)}
-.proc div.aqui{border:2px solid var(--verde)}
-.proc div.aqui::after{content:"Aquí estamos";position:absolute;top:-24px;left:12px;font:600 11px var(--f-cuerpo);letter-spacing:.07em;text-transform:uppercase;color:var(--verde)}
-.ficha3{position:absolute;left:30px;top:24px;width:940px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.ficha3 div{background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:10px 14px}
-.ficha3 div b{display:block;font:700 18px/1.15 var(--f-disp);color:var(--verde)}
-.ficha3 div span{font-size:13.5px;color:var(--gris)}
+.controles{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center}
+.filtros{display:flex;flex-wrap:wrap;gap:6px}
+.filtro{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;font-size:.84rem;font-weight:600}
+.filtro i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.filtro[aria-pressed="false"]{opacity:.5}
+.filtro[aria-pressed="false"] i{background:transparent;border:1.5px solid var(--c)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;color:var(--ink);padding:5px 12px;font-size:.84rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
 
-/* Escena 7: comprobador */
-.comp{position:absolute;left:24px;top:12px;width:952px;height:616px;display:grid;grid-template-columns:560px 1fr;grid-template-rows:auto 1fr;gap:10px 16px}
-.casosbar{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.casosbar .lbl{margin:0 6px 0 0}
-.casosbar button{font:600 12.5px var(--f-cuerpo);border:1px solid var(--ambar);background:var(--papel);color:var(--ambar);border-radius:999px;padding:4px 11px;cursor:pointer}
-.casosbar button[aria-pressed="true"]{background:var(--ambar);color:#fff}
-.casosbar button.limpiar{border-color:var(--linea);color:var(--gris)}
-.preguntas{display:flex;flex-direction:column;gap:7px;overflow:auto;padding-right:4px}
-.enun{font-size:13.2px;line-height:1.4;color:#43393D;background:var(--ambar-claro);border-left:4px solid var(--ambar);border-radius:0 8px 8px 0;padding:8px 12px}
-.pq{background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:7px 10px;display:grid;grid-template-columns:170px 1fr;gap:10px;align-items:center}
-.pq .t{font:600 13px/1.3 var(--f-cuerpo);margin:0}
-.pq .t span{color:var(--gris);font-weight:500;margin-right:6px}
-.pq .ops{display:flex;gap:5px;flex-wrap:wrap}
-.res{display:flex;flex-direction:column;gap:8px;overflow:auto;padding-right:4px}
-.rbox{background:var(--papel);border:1px solid var(--linea);border-top:4px solid var(--c);border-radius:8px;padding:9px 12px;font-size:13.3px;line-height:1.4}
-.rbox .h{display:flex;justify-content:space-between;align-items:center;gap:6px;font:600 11px var(--f-cuerpo);letter-spacing:.07em;text-transform:uppercase;color:var(--gris);margin-bottom:3px}
-.rbox .big{font:700 21px/1.1 var(--f-disp);margin:2px 0 4px}
-.rbox p{margin:0}
-.rbox ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:3px}
-.rbox li{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;line-height:1.3}
-.rbox li .fd{white-space:nowrap;color:var(--gris)}
-.rbox.vacio{color:var(--gris);--c:var(--linea)}
-.sol{font-size:13.3px;line-height:1.42;background:var(--verde-claro);border-left:4px solid var(--verde);border-radius:0 8px 8px 0;padding:8px 12px}
+/* Línea temporal SVG */
+.linea{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px 4px;overflow-x:auto}
+.linea svg{display:block;width:100%;min-width:760px;height:auto}
+.linea text{font-family:var(--font-ui);fill:var(--ink)}
+.linea .eje{font-family:var(--font-code);font-size:12px;fill:var(--muted)}
+.linea .carril-t{font-family:var(--font-display);font-weight:700;font-size:14px}
+.linea .carril-s{font-size:11px;fill:var(--muted)}
+.linea .et{font-size:12.5px;font-weight:700}
+.linea .et.sub{font-weight:400;font-size:11px;fill:var(--muted)}
+.linea .hito{cursor:pointer}
+.linea .hito:focus{outline:none}
+.linea .hito:focus-visible .punto,.linea .hito:hover .punto{stroke:var(--ink);stroke-width:2.5}
+.linea .hito.sel .punto{stroke:var(--ink);stroke-width:3}
+.linea .hoy-t{font-family:var(--font-code);font-size:11px;font-weight:500}
 
-/* Escena 8: errores frecuentes */
-.vf{position:absolute;left:110px;top:40px;width:780px;display:flex;flex-direction:column;gap:16px}
-.vf .cab{display:flex;justify-content:space-between;align-items:center}
-.vf .af{font:500 25px/1.35 var(--f-cuerpo);margin:0;min-height:136px}
-.vf .bts{display:flex;gap:12px}
-.vf .bts button{flex:1;font:600 17px var(--f-cuerpo);border:1px solid var(--linea);background:var(--papel);color:var(--tinta);border-radius:8px;padding:12px;cursor:pointer}
-.vf .bts button:hover{border-color:var(--granate)}
-.vf .bts button.ok{background:var(--verde);border-color:var(--verde);color:#fff}
-.vf .bts button.mal{background:var(--rojo);border-color:var(--rojo);color:#fff}
-.vf .fb{min-height:118px;font-size:15px}
-.vf .fb small{display:block;margin-top:6px;color:var(--gris);font-size:12.5px}
-.vf .nav{display:flex;gap:8px;align-items:center}
-.vf .dots{display:flex;gap:6px;margin-left:auto}
-.vf .dots span{width:12px;height:12px;border-radius:50%;background:var(--linea)}
-.vf .dots span.ok{background:var(--verde)} .vf .dots span.mal{background:var(--rojo)} .vf .dots span.act{box-shadow:0 0 0 2px var(--tinta)}
+/* Vista de lista */
+.lista{display:grid;gap:14px}
+.lista[hidden],.linea[hidden]{display:none}
+.lista .anio{font-family:var(--font-display);font-size:1.15rem;margin:0;border-bottom:1px solid var(--line);padding-bottom:4px}
+.lista .anio.pasado{color:var(--muted)}
+.lista ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.lista li button{width:100%;display:grid;grid-template-columns:96px minmax(0,1fr);gap:2px 12px;text-align:left;padding:9px 12px;border:1px solid var(--line);border-left:4px solid var(--c);border-radius:8px;background:var(--surface);color:var(--ink)}
+.lista li button[aria-current="true"]{background:var(--band);border-color:var(--c)}
+.lista li .f{font-family:var(--font-code);font-size:.78rem;color:var(--muted)}
+.lista li .t{font-weight:600;font-size:.92rem}
+.lista li .r{grid-column:2;font-size:.78rem;color:var(--c)}
+.lista li.pasado button{opacity:.62}
+.lista .hoy{font-family:var(--font-code);font-size:.76rem;color:var(--ink);display:flex;align-items:center;gap:8px}
+.lista .hoy::before,.lista .hoy::after{content:"";flex:1;border-top:1.5px dashed var(--ink)}
 
-/* Escena 9: cierre */
-.lista{position:absolute;left:30px;top:24px;width:520px;display:flex;flex-direction:column;gap:8px}
-.lista div{background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:9px 12px 9px 40px;position:relative;font-size:14.5px;line-height:1.4}
-.lista div.chk{cursor:pointer;user-select:none;transition:background .15s,border-color .15s}.lista div.chk:hover{border-color:var(--ambar)}.lista div.chk::before{content:"";position:absolute;left:13px;top:12px;width:15px;height:15px;border:2px solid var(--ambar);border-radius:4px;background:#fff}.lista div.chk[aria-checked="true"]{background:#f4f8ef;border-color:#7a9a4a}.lista div.chk[aria-checked="true"]::before{background:#7a9a4a;border-color:#7a9a4a}.lista div.chk[aria-checked="true"]::after{content:"";position:absolute;left:19px;top:14px;width:5px;height:9px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}.lista .cuenta{font-weight:600;color:var(--gris);margin-left:6px}
-.colab{position:absolute;left:575px;top:24px;width:395px;display:flex;flex-direction:column;gap:10px}
-.colab .card{padding:14px 16px}
-.colab h3{margin:0 0 6px;font:700 21px var(--f-disp)}
-.colab p{margin:0 0 8px;font-size:13.8px;line-height:1.45}
-.colab .accs{display:flex;gap:8px;flex-wrap:wrap}
-.colab small{display:block;font-size:12.3px;line-height:1.45;color:var(--gris)}
-.colab small + small{margin-top:5px}
+/* Ficha del hito */
+.detalle{display:grid;gap:8px;border-left:4px solid var(--c);background:var(--surface);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.detalle .cab{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.detalle h3{margin:0;font-family:var(--font-display);font-size:1.3rem;line-height:1.2}
+.detalle .fecha{font-family:var(--font-code);font-size:.82rem;color:var(--muted)}
+.detalle p{margin:0;max-width:78ch}
+.detalle .base{font-family:var(--font-law);font-size:.92rem;color:var(--muted)}
+.estado{font-family:var(--font-code);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.estado.pasado{color:var(--muted);background:var(--band)}
+.estado.proximo{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)}
+.estado.futuro{color:var(--ctrl);background:var(--ctrl-soft)}
+.estado.sin{color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent)}
+.estado.no{color:var(--bad);background:color-mix(in srgb,var(--bad) 13%,transparent)}
 
-[data-s="0"] #e0,[data-s="1"] #e1,[data-s="2"] #e2,[data-s="3"] #e3,[data-s="4"] #e4,[data-s="5"] #e5,[data-s="6"] #e6,[data-s="7"] #e7,[data-s="8"] #e8{opacity:1;pointer-events:auto}
-@media (max-width:900px){
-  main{grid-template-columns:1fr;grid-template-rows:auto 1fr}
-  aside{border-right:0;border-bottom:1px solid var(--linea);padding:18px 16px}
-  aside h1{font-size:30px}
-  .marco{min-height:66vw}
-  header{padding:10px 16px}
-}
-@media (prefers-reduced-motion:reduce){*{transition-duration:1ms !important}}
+/* Comprobador */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:24px;align-items:start}
+@media (max-width:960px){.grid{grid-template-columns:minmax(0,1fr)}}
+.preg{display:grid;gap:10px}
+.preg > .pt{display:flex;gap:10px;align-items:baseline}
+.preg > .pt .n{font-family:var(--font-code);font-size:.78rem;color:var(--muted);flex:0 0 auto}
+.preg > .pt b{font-size:.98rem}
+.preg[hidden]{display:none}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface);height:100%}
+.opts label b{font-size:.92rem;line-height:1.3}
+.opts label span{font-size:.82rem;color:var(--muted);line-height:1.35}
+.opts input:checked + label{border-color:var(--accent);background:var(--accent-soft)}
+.opts input:focus-visible + label{outline:2px solid var(--accent);outline-offset:-2px}
+
+.panel{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 16px);display:grid;gap:12px;max-height:calc(100vh - 32px);overflow-y:auto;overscroll-behavior:contain}
+@media (max-width:960px){.panel{position:static;max-height:none;overflow:visible}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:8px}
+.card h3{margin:0;font-size:.78rem;font-family:var(--font-code);font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.card .big{font-family:var(--font-display);font-size:1.5rem;font-weight:700;line-height:1.1;margin:0}
+.card p{margin:0;font-size:.9rem}
+.card.k1{border-top:4px solid var(--ctrl)} .card.k2{border-top:4px solid var(--accent)} .card.k3{border-top:4px solid var(--rev)} .card.k0{border-top:4px solid var(--ink)}
+.vacio{color:var(--muted);font-size:.9rem;margin:0}
+ul.cond{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+ul.cond li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;font-size:.86rem;line-height:1.35;align-items:start}
+ul.cond li .fd{font-family:var(--font-code);font-size:.74rem;color:var(--muted);white-space:nowrap}
+.acciones{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 13px;font-weight:600;font-size:.87rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover{border-color:var(--accent)}
+.copiado{font-size:.84rem;color:var(--ok)}
+
+/* Casos */
+.casos{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.caso{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:10px;align-content:start}
+.caso h3{margin:0;font-family:var(--font-display);font-size:1.12rem;line-height:1.2}
+.caso .tag{font-family:var(--font-code);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.caso .enun{font-family:var(--font-law);font-size:.98rem;line-height:1.45;margin:0}
+.caso details{border-top:1px solid var(--line);padding-top:8px}
+.caso summary{cursor:pointer;font-weight:600;font-size:.88rem;color:var(--accent)}
+.caso details p{margin:8px 0 0;font-size:.9rem}
+
+/* Errores frecuentes */
+.mitos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.mito{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:10px;align-content:start}
+.mito .af{font-family:var(--font-law);font-size:1.02rem;line-height:1.45;margin:0}
+.mito .vf{display:flex;gap:8px}
+.mito .vf button{flex:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 10px;font-weight:600;font-size:.86rem}
+.mito .vf button:hover{border-color:var(--accent)}
+.mito .res{display:grid;gap:4px;padding:10px 12px;border-radius:8px;background:var(--band);font-size:.9rem}
+.mito .res b.bien{color:var(--ok)} .mito .res b.mal{color:var(--bad)}
+.mito .res small{color:var(--muted);font-family:var(--font-code);font-size:.72rem}
+.marcador{font-family:var(--font-code);font-size:.82rem;color:var(--muted)}
+
+/* Colaborar */
+.colabora{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:18px 20px}
+@media (max-width:820px){.colabora{grid-template-columns:minmax(0,1fr)}}
+.colabora h2{font-family:var(--font-display);font-size:1.45rem;margin:0 0 6px}
+.colabora p{margin:0 0 8px;max-width:70ch}
+.colabora ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:.92rem}
+
+details.datos{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px}
+details.datos summary{cursor:pointer;font-weight:600;font-size:.9rem;color:var(--accent)}
+details.datos pre{margin:10px 0 0;max-height:360px;overflow:auto;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:12px;font-family:var(--font-code);font-size:.76rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+
+.aviso{margin:0;padding:12px 14px;border-left:4px solid var(--accent);border-radius:0 8px 8px 0;background:var(--accent-soft);font-size:.92rem}
+footer{margin-top:20px;padding-top:22px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted);display:grid;gap:8px;max-width:92ch}
+footer p{margin:0}
+footer ol{margin:0;padding-left:20px;display:grid;gap:3px}
+.tema{position:fixed;right:max(12px, env(safe-area-inset-right, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));z-index:5;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:.8rem;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 </style>
 </head>
 <body>
-<header>
-  <a class="volver" href="../../index.html">← Colección</a>
-  <div class="marca">Tema 1 · Regulación de productos sanitarios <span>· Calendario de plazos MDR/IVDR</span></div>
-  <nav class="puntos" aria-label="Escenas"></nav>
-</header>
-<main>
-  <aside aria-live="polite">
-    <div class="num" id="num">Escena 1 de 9</div>
-    <h1 id="tit"></h1>
-    <p class="pregunta" id="preg"></p>
-    <p class="cuerpo" id="cuerpo"></p>
-    <div class="ctl">
-      <button type="button" id="ant" disabled>← Anterior</button>
-      <button type="button" id="sig" class="prim">Siguiente →</button>
-      <span class="paso" id="paso"></span>
-    </div>
-    <div class="fuente" id="fuente"></div>
-  </aside>
-  <div class="marco" id="marco" role="region" aria-label="Calendario de plazos del MDR, el IVDR y EUDAMED, con un comprobador y ejercicios">
-    <div class="stage" id="stage">
-
-<!-- 1. Los tres relojes -->
-<div class="esc" id="e0">
-  <div class="rel c1" style="left:30px"><span class="tipo">Reloj 1</span><b>Transición</b><span class="q">¿Hasta cuándo puede introducirse en el mercado un producto heredado?</span><span class="norma">Reglamento (UE) 2023/607 para el MDR y Reglamento (UE) 2024/1860 para el IVDR</span></div>
-  <div class="rel c2" style="left:350px"><span class="tipo">Reloj 2</span><b>EUDAMED</b><span class="q">¿Qué tiene que constar en la base de datos y desde cuándo?</span><span class="norma">Reglamento (UE) 2024/1860 y Decisión (UE) 2025/2371</span></div>
-  <div class="rel c3" style="left:670px"><span class="tipo">Reloj 3</span><b>Revisión</b><span class="q">¿Van a cambiar las reglas?</span><span class="norma">Propuesta COM(2025) 1023, en tramitación</span></div>
-  <div class="banda fade" data-at="0:1" style="top:262px">Cada reforma ha movido un reloj distinto. El 2023/607 alargó la transición del MDR; el 2024/1860 alargó la del IVDR y permitió poner en marcha EUDAMED por módulos; la propuesta de 2025 todavía no ha movido ninguno.</div>
-  <div class="banda fade" data-at="0:2" style="top:372px">La confusión más habitual: un producto puede tener transición hasta 2028 y, aun así, tener que estar registrado en EUDAMED el 28 de noviembre de 2026. Son dos preguntas distintas con dos respuestas distintas.</div>
-  <div class="banda amb fade" data-at="0:2" style="top:482px">Recorrido: primero, qué significa «introducir en el mercado»; después, un reloj por escena; al final, un comprobador con seis casos y una batería de errores frecuentes.</div>
-</div>
-
-<!-- 2. Introducir no es comercializar -->
-<div class="esc" id="e1">
-  <div class="tramo intro" style="left:30px;width:470px;top:58px"><b>Introducción en el mercado</b>Primera puesta a disposición de cada unidad en la Unión. Ocurre una sola vez.</div>
-  <div class="eslabon" style="left:30px"><b>Fabricante</b><small>o importador</small></div>
-  <div class="flecha" style="left:222px;width:46px">→</div>
-  <div class="eslabon" style="left:270px"><b>Distribuidor</b><small>almacén, mayorista</small></div>
-  <div class="flecha" style="left:462px;width:46px">→</div>
-  <div class="eslabon" style="left:510px"><b>Distribuidor</b><small>o representante local</small></div>
-  <div class="flecha" style="left:702px;width:46px">→</div>
-  <div class="eslabon" style="left:750px;width:220px"><b>Hospital o usuario</b><small>puesta en servicio</small></div>
-  <div class="tramo com" style="left:270px;width:700px"><b>Comercialización</b>Cualquier suministro posterior para su distribución, consumo o uso, de pago o gratuito.</div>
-  <div class="banda piz fade" data-at="1:1" style="top:390px">Las fechas del reloj 1 limitan la <b>introducción</b>: hasta esa fecha, el fabricante puede seguir sacando unidades del producto heredado a la cadena de suministro. Después, solo unidades conformes al Reglamento.</div>
-  <div class="banda piz fade" data-at="1:2" style="top:500px">Lo ya introducido puede seguir comercializándose y ponerse en servicio sin fecha límite. El Reglamento (UE) 2023/607 suprimió la fecha de venta («<i>sell-off</i>») que tenían el MDR y el IVDR.</div>
-</div>
-
-<!-- 3. Reloj 1 · MDR -->
-<div class="esc" id="e2">
-  <div class="tl" id="tl-mdr" style="top:14px"></div>
-  <div class="grupo fade" data-at="2:0" style="left:30px;top:200px"><h3>31 de diciembre de 2027</h3><p>Clase III y clase IIb implantables, salvo los de tecnología bien establecida: suturas, grapas, empastes, brackets, coronas dentales, tornillos, cuñas, placas, alambres, pernos, clips y conectores.</p></div>
-  <div class="grupo fade" data-at="2:0" style="left:512px;top:200px"><h3>31 de diciembre de 2028</h3><p>El resto: IIb no implantables, IIb implantables de tecnología bien establecida, IIa, Is e Im, y los clase I autodeclarados con la Directiva que con el MDR necesitan organismo notificado (por ejemplo, Ir).</p></div>
-  <div class="conds fade" data-at="2:1" style="top:352px">
-    <div class="lbl" style="grid-column:1/-1;border:0;background:none;padding:0;margin:0">Condiciones para acogerse a la ampliación</div>
-    <div>Sigue cumpliendo la Directiva (MDD o AIMDD)<span class="f">siempre</span></div>
-    <div>Sin cambios significativos de diseño ni de finalidad prevista<span class="f">siempre</span></div>
-    <div>No presenta un riesgo inaceptable para la salud o la seguridad<span class="f">siempre</span></div>
-    <div>Sistema de gestión de la calidad conforme al MDR<span class="f">26 may 2024</span></div>
-    <div>Solicitud formal a un organismo notificado<span class="f">26 may 2024</span></div>
-    <div>Acuerdo escrito con el organismo notificado<span class="f">26 sep 2024</span></div>
-  </div>
-  <div class="banda piz fade" data-at="2:1" style="top:556px">Implantables a medida de clase III: podían introducirse sin certificado del sistema de calidad hasta el 26 de mayo de 2026, si se habían cumplido la solicitud y el acuerdo en esas mismas fechas.</div>
-</div>
-
-<!-- 4. Reloj 1 · IVDR -->
-<div class="esc" id="e3">
-  <table class="tabla">
-    <tr><th>Situación con la Directiva → clase IVDR</th><th>Sistema de calidad IVDR</th><th>Solicitud al ON</th><th>Acuerdo escrito</th><th>Fin de la introducción</th></tr>
-    <tr><td>Certificado IVDD, o autodeclarado que pasa a clase D</td><td>26 may 2025</td><td>26 may 2025</td><td>26 sep 2025</td><td class="fin">31 dic 2027</td></tr>
-    <tr><td>Autodeclarado que pasa a clase C</td><td>26 may 2025</td><td>26 may 2026</td><td>26 sep 2026</td><td class="fin">31 dic 2028</td></tr>
-    <tr><td>Autodeclarado que pasa a clase B o A estéril</td><td>26 may 2025</td><td>26 may 2027</td><td>26 sep 2027</td><td class="fin">31 dic 2029</td></tr>
-    <tr class="sin"><td>Clase A no estéril</td><td colspan="4">Sin transición: debe cumplir el IVDR desde el 26 de mayo de 2022.</td></tr>
-  </table>
-  <div class="banda piz fade" data-at="3:1" style="top:340px">La fila la decide la situación con la Directiva, no solo la clase nueva. Un producto con certificado IVDD va a la primera fila aunque con el IVDR sea de clase C o B: su plazo termina en 2027.</div>
-  <div class="banda piz fade" data-at="3:1" style="top:450px">Las condiciones de fondo son las mismas que en el MDR: seguir cumpliendo la Directiva, sin cambios significativos y sin riesgo inaceptable. Si falla un hito con fecha, el producto no puede acogerse a la ampliación.</div>
-</div>
-
-<!-- 5. Reloj 2 · EUDAMED -->
-<div class="esc" id="e4">
-  <div class="tl" id="tl-eud" style="top:14px"></div>
-  <div class="mods fade" data-at="4:1" style="top:200px">
-    <div class="lbl" style="grid-column:1/-1;border:0;background:none;padding:0;margin:0">Módulos de uso obligatorio desde el 28 de mayo de 2026</div>
-    <div class="si"><b>Registro de actores</b>Fabricantes, representantes, importadores</div>
-    <div class="si"><b>UDI / dispositivos</b>Registro de cada producto por UDI-DI</div>
-    <div class="si"><b>Organismos notificados y certificados</b></div>
-    <div class="si"><b>Vigilancia del mercado</b>Actividades de las autoridades</div>
-    <div><b>Vigilancia y seguimiento poscomercialización</b>Todavía no obligatorio</div>
-    <div><b>Investigaciones clínicas y estudios del funcionamiento</b>Todavía no obligatorio</div>
-  </div>
-  <div class="quien fade" data-at="4:2" style="top:418px">
-    <div><b>Primera unidad desde el 28 may 2026</b>Producto nuevo en el mercado.<span class="r">Registro antes de introducirla</span></div>
-    <div><b>Introducido antes y se sigue introduciendo</b>Heredado o conforme al Reglamento.<span class="r">Registro hasta el 28 nov 2026</span></div>
-    <div><b>Dejó de introducirse antes del 28 may 2026</b>Solo quedan unidades en la cadena.<span class="r">No se registra, salvo vigilancia</span></div>
-    <div><b>Heredado con versión del Reglamento ya registrada</b>Mismo UDI-DI, referencia o nombre.<span class="r">No se registra el heredado</span></div>
-  </div>
-</div>
-
-<!-- 6. Reloj 3 · Revisión -->
-<div class="esc" id="e5">
-  <div class="ficha3">
-    <div><b>COM(2025) 1023</b><span>Propuesta adoptada por la Comisión el 16 de diciembre de 2025</span></div>
-    <div><b>2025/0404(COD)</b><span>Procedimiento legislativo ordinario: deciden el Parlamento Europeo y el Consejo</span></div>
-    <div><b id="rev-estado">En tramitación</b><span id="rev-fecha"></span></div>
-  </div>
-  <div class="proc">
-    <div class="hecho"><b>Propuesta</b>La Comisión presenta el texto.</div>
-    <div class="aqui"><b>Parlamento y Consejo</b>Cada institución fija su posición y negocian.</div>
-    <div><b>Acuerdo</b>Se aprueba un texto común.</div>
-    <div><b>Publicación en el DOUE</b>Solo desde aquí es derecho vigente.</div>
-    <div><b>Aplicación</b>En las fechas que fije el propio reglamento.</div>
-  </div>
-  <div class="banda ver fade" data-at="5:1" style="top:320px">Mientras no se publique en el Diario Oficial, la propuesta no cambia ninguno de los plazos de los relojes 1 y 2. Lo que se lee estos meses sobre ella es lo que propone la Comisión, no lo que obliga hoy.</div>
-  <div class="banda ver fade" data-at="5:1" style="top:430px">Si se aprueba, conviene leer su texto final y sus disposiciones transitorias: lo que salga de la negociación puede no coincidir con la propuesta inicial.</div>
-</div>
-
-<!-- 7. Comprobador -->
-<div class="esc int" id="e6">
-  <div class="comp">
-    <div class="casosbar" id="casosbar"></div>
-    <div class="preguntas" id="preguntas"></div>
-    <div class="res" id="resultado"></div>
-  </div>
-</div>
-
-<!-- 8. Errores frecuentes -->
-<div class="esc int" id="e7">
-  <div class="vf" id="vf"></div>
-</div>
-
-<!-- 9. Cierre -->
-<div class="esc" id="e8">
-  <div class="lista int" id="lista9">
-    <div class="lbl" style="padding:0;border:0;background:none">Antes de dar por buena una fecha <span class="cuenta" id="cuenta9"></span></div>
-    <div>Sé qué reloj contesta mi pregunta: introducción, registro o revisión.</div>
-    <div>Distingo si hablo de introducir en el mercado o de comercializar.</div>
-    <div>Sé si el producto es heredado, conforme al Reglamento o sin transición.</div>
-    <div>He comprobado las condiciones de la ampliación y sus fechas.</div>
-    <div>Sé si el producto se sigue introduciendo después del 28 de mayo de 2026.</div>
-    <div>He comprobado en EUR-Lex que no se ha publicado una norma posterior.</div>
-  </div>
-  <div class="colab int">
-    <div class="card">
-      <h3>Mejoras y colaboraciones</h3>
-      <p>Este recurso es un prototipo abierto. Me interesan plazos o matices que falten, casos reales anonimizados para practicar, errores en fechas o referencias e ideas para usarlo en clase o en formación interna.</p>
-      <div class="accs">
-        <a class="acc" id="enlace-issues" href="#" target="_blank" rel="noopener">Proponer una mejora</a>
-        <a class="acc sec" href="mailto:cesar.sanchez@uclm.es?subject=Calendario%20de%20plazos%20MDR%2FIVDR">Escribir al autor</a>
-        <a class="acc sec" id="enlace-codigo" href="#" target="_blank" rel="noopener">Ver el código</a>
+<div class="franja" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="marca">
+      <a class="logo" href="https://www.uclm.es" target="_blank" rel="noopener"><img src="../../logo-uclm.png" alt="Universidad de Castilla-La Mancha" width="520" height="225"></a>
+      <div class="ficha">
+        <span class="sello">Recurso docente en abierto</span>
+        <dl>
+          <div><dt>Asignatura</dt><dd>Calidad y Gestión en Tecnología Sanitaria (59718)</dd></div>
+          <div><dt>Centro</dt><dd>Escuela Politécnica de Cuenca</dd></div>
+          <div class="ancho"><dt>Autor</dt><dd>César Sánchez Meléndez · <span class="correo">cesar.sanchez@uclm.es</span></dd></div>
+          <div class="ancho"><dt>Normativa revisada</dt><dd id="revisado">16 de noviembre de 2026</dd></div>
+        </dl>
       </div>
     </div>
-    <div class="card">
-      <small><b>Recurso docente en abierto</b> de Calidad y Gestión en Tecnología Sanitaria (59718), Escuela Politécnica de Cuenca, UCLM. Autor: César Sánchez Meléndez · cesar.sanchez@uclm.es. Normativa revisada el <span id="revisado"></span>.</small>
-      <small><b>Uso orientativo.</b> Simplifica los artículos 120 del MDR y 110 del IVDR y las disposiciones transitorias de EUDAMED. No contempla todas las situaciones (certificados retirados, excepciones nacionales, productos del anexo XVI). La decisión sobre un producto corresponde al fabricante y a su organismo notificado.</small>
-      <small><b>Inteligencia artificial.</b> Un asistente de IA ha ayudado a redactar el código y los textos; el autor ha revisado los plazos y las explicaciones. La página no usa IA: todo se calcula en el navegador con reglas fijas.</small>
-      <small>© 2026 César Sánchez Meléndez. <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license" style="color:var(--granate)">CC BY-SA 4.0</a>, código incluido. El logotipo de la UCLM queda excluido.</small>
+    <div class="eyebrow">MDR · IVDR · EUDAMED · periodos de transición</div>
+    <h1>Calendario de plazos MDR/IVDR</h1>
+    <p>Las prórrogas de los reglamentos, el despliegue de EUDAMED y la revisión en curso se solapan, y es fácil mezclar sus fechas. Este recurso las separa en tres «relojes» que responden a preguntas distintas y permite comprobar qué plazos afectan a un producto concreto. Es una ayuda para el estudio: no sustituye la lectura de los reglamentos ni el criterio del organismo notificado.</p>
+    <nav class="indice" aria-label="Contenido">
+      <a href="#relojes"><span>1</span>Los tres relojes</a>
+      <a href="#comprobador"><span>2</span>¿Qué plazos afectan a mi producto?</a>
+      <a href="#casos"><span>3</span>Casos para practicar</a>
+      <a href="#errores"><span>4</span>Errores frecuentes</a>
+      <a href="#colabora"><span>5</span>Mejoras y colaboraciones</a>
+    </nav>
+  </header>
+
+  <p class="aviso" id="aviso-carga">Cargando el calendario… Si este mensaje no desaparece, el navegador no está ejecutando JavaScript: ábrelo desde su dirección web en Safari, Chrome o Firefox.</p>
+
+  <!-- 1. Relojes -->
+  <section class="sec" id="relojes" aria-labelledby="t-relojes">
+    <header>
+      <div class="num-sec">1</div>
+      <h2 id="t-relojes">Los tres relojes</h2>
+      <p>Cada reforma ha movido un reloj distinto. Pulsa cualquier punto de la línea para ver qué ocurre en esa fecha, a quién afecta y dónde está escrito.</p>
+    </header>
+    <div class="relojes">
+      <div class="reloj r1"><b>Reloj 1 · Transición</b><span class="q">¿Hasta cuándo puede introducirse en el mercado un producto heredado?</span><span>Reg. (UE) 2023/607 (MDR) y 2024/1860 (IVDR)</span></div>
+      <div class="reloj r2"><b>Reloj 2 · EUDAMED</b><span class="q">¿Dónde tiene que constar el producto y desde cuándo?</span><span>Reg. (UE) 2024/1860 y Decisión (UE) 2025/2371</span></div>
+      <div class="reloj r3"><b>Reloj 3 · Revisión</b><span class="q">¿Van a cambiar las reglas?</span><span>Propuesta COM(2025) 1023, en tramitación</span></div>
     </div>
-  </div>
+    <div class="controles">
+      <div class="filtros" id="filtros" role="group" aria-label="Mostrar u ocultar relojes"></div>
+      <div class="seg" role="group" aria-label="Vista">
+        <button type="button" id="v-linea" aria-pressed="true">Línea</button>
+        <button type="button" id="v-lista" aria-pressed="false">Lista</button>
+      </div>
+    </div>
+    <div class="linea" id="linea"></div>
+    <div class="lista" id="lista" hidden></div>
+    <div id="detalle" aria-live="polite"></div>
+  </section>
+
+  <!-- 2. Comprobador -->
+  <section class="sec" id="comprobador" aria-labelledby="t-comp">
+    <header>
+      <div class="num-sec">2</div>
+      <h2 id="t-comp">¿Qué plazos afectan a mi producto?</h2>
+      <p>Responde a las preguntas. El panel separa lo que contestan los dos primeros relojes: hasta cuándo puede introducirse el producto en el mercado y qué tiene que constar en EUDAMED. Las fechas se comparan con la de hoy en tu dispositivo.</p>
+    </header>
+    <div class="grid">
+      <form class="bloque" id="form" onsubmit="return false">
+        <div class="preg" id="p-reg"></div>
+        <div class="preg" id="p-sit" hidden></div>
+        <div class="preg" id="p-clase" hidden></div>
+        <div class="preg" id="p-cond" hidden></div>
+        <div class="preg" id="p-eud" hidden></div>
+        <div class="preg" id="p-mismo" hidden></div>
+        <div class="acciones"><button type="button" class="btn" id="reiniciar">Empezar de nuevo</button></div>
+      </form>
+      <aside class="panel" id="panel" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- 3. Casos -->
+  <section class="sec" id="casos" aria-labelledby="t-casos">
+    <header>
+      <div class="num-sec">3</div>
+      <h2 id="t-casos">Casos para practicar</h2>
+      <p>Productos concretos para resolver con el comprobador. Intenta contestar antes de cargar el caso; después compara tu respuesta con la solución comentada.</p>
+    </header>
+    <div class="casos" id="casos-lista"></div>
+  </section>
+
+  <!-- 4. Errores frecuentes -->
+  <section class="sec" id="errores" aria-labelledby="t-err">
+    <header>
+      <div class="num-sec">4</div>
+      <h2 id="t-err">Errores frecuentes</h2>
+      <p>Afirmaciones que suelen aparecer en clase. Decide si son verdaderas o falsas antes de ver la explicación. <span class="marcador" id="marcador"></span></p>
+    </header>
+    <div class="mitos" id="mitos"></div>
+  </section>
+
+  <!-- 4. Colaborar -->
+  <section class="sec" id="colabora" aria-labelledby="t-col">
+    <div class="colabora">
+      <div>
+        <div class="num-sec">5</div>
+        <h2 id="t-col">Mejoras y colaboraciones</h2>
+        <p>Este recurso es un prototipo abierto y crece con las aportaciones de quien lo usa. Me interesa especialmente la mirada de profesionales de regulatorio, organismos notificados, ingeniería clínica y docentes de otras universidades.</p>
+        <ul>
+          <li>Plazos o matices que falten o que convenga explicar mejor.</li>
+          <li>Casos reales (anonimizados) que sirvan para practicar.</li>
+          <li>Errores en las fechas, en las condiciones o en las referencias.</li>
+          <li>Ideas para usarlo en clase o en formación interna.</li>
+        </ul>
+      </div>
+      <div class="acciones" style="align-content:center">
+        <a class="btn primary" id="enlace-issues" href="#" target="_blank" rel="noopener">Proponer una mejora en GitHub</a>
+        <a class="btn" href="mailto:cesar.sanchez@uclm.es?subject=Calendario%20de%20plazos%20MDR%2FIVDR">Escribir al autor</a>
+        <a class="btn" id="enlace-codigo" href="#" target="_blank" rel="noopener">Ver el código</a>
+      </div>
+    </div>
+    <details class="datos">
+      <summary>Ver los plazos como datos (JSON)</summary>
+      <pre id="json"></pre>
+    </details>
+  </section>
+
+  <footer>
+    <p><strong>Recurso docente en abierto</strong> de la asignatura Calidad y Gestión en Tecnología Sanitaria (59718), Escuela Politécnica de Cuenca, Universidad de Castilla-La Mancha. Autor: César Sánchez Meléndez · <a href="https://www.cesarsanchezmelendez.es">cesarsanchezmelendez.es</a>. Forma parte de los <a href="../../">recursos interactivos de la asignatura</a>, junto con el <a href="https://www.cesarsanchezmelendez.es/clasificaMD/">Clasificador de productos sanitarios MDR/IVDR</a>.</p>
+    <p><strong>Uso orientativo.</strong> El comprobador simplifica los artículos 120 del MDR y 110 del IVDR y las disposiciones transitorias de EUDAMED. No contempla todas las situaciones (por ejemplo, certificados retirados, excepciones nacionales o productos del anexo XVI). La decisión sobre un producto concreto corresponde al fabricante y a su organismo notificado. La normativa se revisó en la fecha indicada en la cabecera.</p>
+    <p><strong>Licencia.</strong> © 2026 César Sánchez Meléndez. Material publicado con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)</a>, código incluido. El logotipo de la UCLM queda excluido.</p>
+    <p><strong>Uso de inteligencia artificial.</strong> Un asistente de IA ha ayudado a redactar el código, la interfaz y los textos. El autor ha revisado los plazos y las explicaciones. La página no usa IA: todo se calcula en el navegador con reglas fijas.</p>
+    <p>Referencias:</p>
+    <ol>
+      <li>Reglamento (UE) 2017/745 sobre los productos sanitarios (MDR). <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32017R0745" target="_blank" rel="noopener">EUR-Lex</a></li>
+      <li>Reglamento (UE) 2017/746 sobre los productos sanitarios para diagnóstico in vitro (IVDR). <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32017R0746" target="_blank" rel="noopener">EUR-Lex</a></li>
+      <li>Reglamento (UE) 2023/607, que modifica las disposiciones transitorias del MDR y el IVDR. <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R0607" target="_blank" rel="noopener">EUR-Lex</a></li>
+      <li>Reglamento (UE) 2024/1860: despliegue gradual de Eudamed, obligación de informar en caso de interrupción del suministro y disposiciones transitorias del IVDR. <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32024R1860" target="_blank" rel="noopener">EUR-Lex</a></li>
+      <li>Decisión (UE) 2025/2371 de la Comisión, aviso de funcionalidad de los cuatro primeros módulos de Eudamed (DOUE de 27 de noviembre de 2025). <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202502371" target="_blank" rel="noopener">EUR-Lex</a></li>
+      <li>Comisión Europea. Q&amp;A on practical aspects related to the implementation of the gradual roll-out of Eudamed. <a href="https://health.ec.europa.eu/document/download/0e7327c7-0e06-4fbd-90d3-8ab7bb30fe9f_en?filename=eudamed-qa_en.pdf" target="_blank" rel="noopener">PDF</a></li>
+      <li>Comisión Europea. Calendarios de transición de Eudamed: productos y certificados. <a href="https://health.ec.europa.eu/medical-devices-eudamed/overview_en" target="_blank" rel="noopener">health.ec.europa.eu</a></li>
+      <li>Comisión Europea. Propuesta COM(2025) 1023 final, de 16 de diciembre de 2025, de simplificación del MDR y el IVDR. <a href="https://health.ec.europa.eu/document/download/25e7ea7c-cab3-40cf-86d9-d11f5e7744d8_en?filename=md_com_2025-1023_act_en.pdf" target="_blank" rel="noopener">PDF</a></li>
+    </ol>
+  </footer>
 </div>
+<button type="button" class="tema" id="tema" aria-label="Cambiar entre tema claro y oscuro">Tema</button>
 
-    </div>
-  </div>
-</main>
-
+<script>
+window.addEventListener("error", function (e) { var a = document.getElementById("aviso-carga"); if (a) { a.hidden = false; a.textContent = "No se ha podido cargar el calendario (" + (e.message || "error desconocido") + "). Indica este mensaje, el navegador y el dispositivo al autor."; } });
+</script>
 <script>
 "use strict";
 /* ------------------------------------------------------------------
-   Configuración y fuentes
+   Configuración
 ------------------------------------------------------------------ */
 var REPO = "https://github.com/csmelendez/cgt-recursos";
 var CARPETA = "tema1/plazos-mdr-ivdr";
 var REVISADO = "2026-11-16";
 
-var F = {
-  mdr: '<a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32017R0745" target="_blank" rel="noopener">Reglamento (UE) 2017/745 (MDR)</a>',
-  ivdr: '<a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32017R0746" target="_blank" rel="noopener">Reglamento (UE) 2017/746 (IVDR)</a>',
-  r2023: '<a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R0607" target="_blank" rel="noopener">Reglamento (UE) 2023/607</a>',
-  r2024: '<a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32024R1860" target="_blank" rel="noopener">Reglamento (UE) 2024/1860</a>',
-  d2025: '<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202502371" target="_blank" rel="noopener">Decisión (UE) 2025/2371</a>',
-  qa: '<a href="https://health.ec.europa.eu/document/download/0e7327c7-0e06-4fbd-90d3-8ab7bb30fe9f_en?filename=eudamed-qa_en.pdf" target="_blank" rel="noopener">Q&amp;A de la Comisión sobre el despliegue de Eudamed</a>',
-  calDisp: '<a href="https://health.ec.europa.eu/document/download/3bb39d28-dcaa-4907-9ea9-ea89cee091c0_en?filename=md_eudamed_tp-leg-reg-devices_en.pdf" target="_blank" rel="noopener">calendario de registro de productos</a>',
-  calCert: '<a href="https://health.ec.europa.eu/document/download/bb73f9c4-e5cb-4110-adac-efbabcc06932_en?filename=md_eudamed_tp-cert_en.pdf" target="_blank" rel="noopener">calendario de registro de certificados</a>',
-  com: '<a href="https://health.ec.europa.eu/document/download/25e7ea7c-cab3-40cf-86d9-d11f5e7744d8_en?filename=md_com_2025-1023_act_en.pdf" target="_blank" rel="noopener">Propuesta COM(2025) 1023</a>'
+/* ------------------------------------------------------------------
+   Datos: los hitos de cada reloj
+   reloj: mdr | ivdr (reloj 1), eud (reloj 2), rev (reloj 3)
+   mayor: se rotula en la línea; los menores solo llevan punto
+   pos: a (etiqueta arriba) | b (abajo)
+------------------------------------------------------------------ */
+var FUENTES = {
+  r2023: { t: "Reglamento (UE) 2023/607", u: "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32023R0607" },
+  r2024: { t: "Reglamento (UE) 2024/1860", u: "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32024R1860" },
+  d2025: { t: "Decisión (UE) 2025/2371", u: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202502371" },
+  qa: { t: "Q&A de la Comisión sobre el despliegue de Eudamed", u: "https://health.ec.europa.eu/document/download/0e7327c7-0e06-4fbd-90d3-8ab7bb30fe9f_en?filename=eudamed-qa_en.pdf" },
+  calDisp: { t: "Calendario de la Comisión: productos introducidos antes del uso obligatorio", u: "https://health.ec.europa.eu/document/download/3bb39d28-dcaa-4907-9ea9-ea89cee091c0_en?filename=md_eudamed_tp-leg-reg-devices_en.pdf" },
+  calCert: { t: "Calendario de la Comisión: registro de certificados", u: "https://health.ec.europa.eu/document/download/bb73f9c4-e5cb-4110-adac-efbabcc06932_en?filename=md_eudamed_tp-cert_en.pdf" },
+  com: { t: "Propuesta COM(2025) 1023", u: "https://health.ec.europa.eu/document/download/25e7ea7c-cab3-40cf-86d9-d11f5e7744d8_en?filename=md_com_2025-1023_act_en.pdf" }
 };
 
-window.ESCENAS = [
- { t: "Tres relojes", p: "¿Por qué se mezclan tanto las fechas?",
-   c: "Desde 2023 se han aprobado dos reformas y hay una tercera en marcha. Cada una contesta a una pregunta distinta sobre el mismo producto. Separarlas en tres relojes es la forma más rápida de no confundir sus fechas.",
-   f: F.r2023 + "; " + F.r2024 + "; " + F.d2025 + "; " + F.com + ".", n: 3 },
- { t: "Introducir no es comercializar", p: "¿Qué limitan exactamente las fechas de transición?",
-   c: "El MDR y el IVDR distinguen la primera puesta a disposición de cada unidad, que es la introducción en el mercado, de cualquier suministro posterior, que es la comercialización. Las fechas de transición se refieren a la primera.",
-   f: "Art. 2, puntos 27 y 28, del " + F.mdr + ", y definiciones equivalentes del IVDR; " + F.r2023 + ".", n: 3 },
- { t: "Reloj 1\u00a0· Transición MDR", p: "¿Hasta cuándo puede introducirse un producto heredado?",
-   c: "Un producto heredado tiene certificado de la Directiva válido el 26 de mayo de 2021, o es de clase I autodeclarado y con el MDR necesita organismo notificado. Su plazo depende de la clase y de haber cumplido a tiempo las condiciones.",
-   f: "Art. 120 del " + F.mdr + ", modificado por el " + F.r2023 + ".", n: 2 },
- { t: "Reloj 1\u00a0· Transición IVDR", p: "¿Y en el diagnóstico in vitro?",
-   c: "El IVDR tiene su propio calendario, ampliado en 2024. Cada grupo tiene tres hitos que cumplir (sistema de calidad, solicitud y acuerdo con el organismo notificado) y una fecha final para introducir el producto heredado.",
-   f: "Art. 110 del " + F.ivdr + ", modificado por el " + F.r2024 + ".", n: 2 },
- { t: "Reloj 2\u00a0· EUDAMED", p: "¿Qué tiene que constar en la base de datos y desde cuándo?",
-   c: "El 2024/1860 permitió poner en marcha EUDAMED por módulos. Cuando la Comisión publica en el DOUE que un módulo funciona, empiezan a contar los plazos: seis meses para que sea obligatorio y doce para registrar lo que ya estaba en el mercado.",
-   f: "Arts. 34 y 123 del MDR y art. 113 del IVDR, modificados por el " + F.r2024 + "; " + F.d2025 + "; " + F.qa + "; " + F.calDisp + "; " + F.calCert + ".", n: 3 },
- { t: "Reloj 3\u00a0· Revisión", p: "¿Van a cambiar las reglas?",
-   c: "En diciembre de 2025 la Comisión propuso simplificar el MDR y el IVDR. Es una propuesta en tramitación: hasta que el Parlamento y el Consejo aprueben un texto y se publique, los plazos son los de los relojes 1 y 2.",
-   f: F.com + ", procedimiento 2025/0404(COD).", n: 2 },
- { t: "¿Qué plazos afectan a mi producto?", p: "Aplica los dos primeros relojes a un caso concreto.",
-   c: "Responde a las preguntas o carga uno de los seis casos. El panel separa lo que dice cada reloj. En los casos, intenta contestar antes de mirar la solución. Las fechas se comparan con la de hoy en tu dispositivo.",
-   f: "Simplificación docente de los arts. 120 MDR y 110 IVDR y de las disposiciones transitorias de EUDAMED. Los casos son ejemplos de clase, no productos reales concretos.", n: 1 },
- { t: "Errores frecuentes", p: "¿Verdadero o falso?",
-   c: "Siete afirmaciones que aparecen a menudo en clase y en las consultas. Decide antes de ver la explicación; cada respuesta remite al artículo o al documento que la sostiene.",
-   f: F.r2023 + "; " + F.r2024 + "; " + F.qa + ".", n: 1 },
- { t: "Antes de dar por buena una fecha", p: "¿Qué hay que comprobar siempre?",
-   c: "Seis comprobaciones que resumen el recorrido. Y una petición: si trabajas en regulatorio, en un organismo notificado o en ingeniería clínica, o das clase de esta materia, cualquier aportación ayuda a mejorar el recurso.",
-   f: "Colección de recursos interactivos de Calidad y Gestión en Tecnología Sanitaria.", n: 1 }
+var RELOJES = {
+  mdr:  { n: "Transición MDR", s: "Reg. (UE) 2023/607", g: "Reloj 1", c: "var(--ctrl)" },
+  ivdr: { n: "Transición IVDR", s: "Reg. (UE) 2024/1860", g: "Reloj 1", c: "var(--ctrl)" },
+  eud:  { n: "EUDAMED", s: "Reg. (UE) 2024/1860", g: "Reloj 2", c: "var(--accent)" },
+  rev:  { n: "Revisión", s: "COM(2025) 1023", g: "Reloj 3", c: "var(--rev)" }
+};
+
+var HITOS = [
+  { id: "mdr-cond", reloj: "mdr", fecha: "2024-05-26", mayor: false,
+    titulo: "MDR: sistema de calidad y solicitud al organismo notificado",
+    detalle: "Para acogerse a la ampliación, el fabricante de un producto heredado debía tener un sistema de gestión de la calidad conforme al MDR y haber presentado una solicitud formal a un organismo notificado. Sin estas condiciones, la transición de ese producto terminó en esta fecha.",
+    base: "Art. 120 MDR, modificado por el Reglamento (UE) 2023/607.", fuente: "r2023" },
+  { id: "mdr-acuerdo", reloj: "mdr", fecha: "2024-09-26", mayor: false,
+    titulo: "MDR: acuerdo escrito con el organismo notificado",
+    detalle: "Fecha límite para firmar el acuerdo escrito con el organismo notificado. Desde entonces, ese organismo se encarga de la vigilancia adecuada del producto heredado.",
+    base: "Art. 120 MDR, modificado por el Reglamento (UE) 2023/607.", fuente: "r2023" },
+  { id: "mdr-medida", reloj: "mdr", fecha: "2026-05-26", mayor: true, pos: "b", corto: "Clase III a medida",
+    titulo: "MDR: implantables a medida de clase III",
+    detalle: "Fin del periodo en que los productos implantables a medida de clase III podían introducirse en el mercado sin el certificado del sistema de calidad emitido por un organismo notificado.",
+    base: "Art. 120 MDR, modificado por el Reglamento (UE) 2023/607.", fuente: "r2023" },
+  { id: "mdr-2027", reloj: "mdr", fecha: "2027-12-31", mayor: true, pos: "a", corto: "Clase III y IIb impl.",
+    titulo: "MDR: fin de la transición para clase III y IIb implantables",
+    detalle: "Último día para introducir en el mercado productos heredados de clase III y de clase IIb implantables. Los IIb implantables de tecnología bien establecida (suturas, grapas, empastes, brackets, coronas dentales, tornillos, cuñas, placas, alambres, pernos, clips y conectores) pasan al plazo de 2028.",
+    base: "Art. 120 MDR, modificado por el Reglamento (UE) 2023/607.", fuente: "r2023" },
+  { id: "mdr-2028", reloj: "mdr", fecha: "2028-12-31", mayor: true, pos: "a", corto: "Resto de clases",
+    titulo: "MDR: fin de la transición para el resto de clases",
+    detalle: "Último día para introducir en el mercado los demás productos heredados: clase IIb no incluidos en 2027, IIa, Is e Im, y los de clase I con la Directiva que con el MDR necesitan por primera vez un organismo notificado.",
+    base: "Art. 120 MDR, modificado por el Reglamento (UE) 2023/607.", fuente: "r2023" },
+
+  { id: "ivdr-cond-d", reloj: "ivdr", fecha: "2025-05-26", mayor: false,
+    titulo: "IVDR: sistema de calidad y solicitud (certificados IVDD y clase D)",
+    detalle: "Fecha límite para tener el sistema de gestión de la calidad conforme al IVDR (para todas las clases con transición) y para solicitar la evaluación a un organismo notificado en los productos con certificado IVDD y en los autodeclarados que pasan a clase D.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-ac-d", reloj: "ivdr", fecha: "2025-09-26", mayor: false,
+    titulo: "IVDR: acuerdo escrito (certificados IVDD y clase D)",
+    detalle: "Fecha límite para firmar el acuerdo escrito con el organismo notificado en los productos con certificado IVDD y en los que pasan a clase D.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-sol-c", reloj: "ivdr", fecha: "2026-05-26", mayor: false,
+    titulo: "IVDR: solicitud al organismo notificado (clase C)",
+    detalle: "Fecha límite para solicitar la evaluación a un organismo notificado en los productos autodeclarados con la Directiva que pasan a clase C.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-ac-c", reloj: "ivdr", fecha: "2026-09-26", mayor: false,
+    titulo: "IVDR: acuerdo escrito (clase C)",
+    detalle: "Fecha límite para firmar el acuerdo escrito con el organismo notificado en los productos que pasan a clase C.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-sol-b", reloj: "ivdr", fecha: "2027-05-26", mayor: false,
+    titulo: "IVDR: solicitud al organismo notificado (clase B y A estéril)",
+    detalle: "Fecha límite para solicitar la evaluación a un organismo notificado en los productos autodeclarados con la Directiva que pasan a clase B o a clase A estéril.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-ac-b", reloj: "ivdr", fecha: "2027-09-26", mayor: false,
+    titulo: "IVDR: acuerdo escrito (clase B y A estéril)",
+    detalle: "Fecha límite para firmar el acuerdo escrito con el organismo notificado en los productos que pasan a clase B o a clase A estéril.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-2027", reloj: "ivdr", fecha: "2027-12-31", mayor: true, pos: "b", corto: "IVDD cert. y clase D",
+    titulo: "IVDR: fin de la transición para certificados IVDD y clase D",
+    detalle: "Último día para introducir en el mercado productos con certificado de la Directiva 98/79/CE y productos autodeclarados que con el IVDR son de clase D.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-2028", reloj: "ivdr", fecha: "2028-12-31", mayor: true, pos: "b", corto: "Clase C",
+    titulo: "IVDR: fin de la transición para la clase C",
+    detalle: "Último día para introducir en el mercado productos autodeclarados con la Directiva que con el IVDR son de clase C.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+  { id: "ivdr-2029", reloj: "ivdr", fecha: "2029-12-31", mayor: true, pos: "b", corto: "Clase B y A estéril",
+    titulo: "IVDR: fin de la transición para la clase B y la clase A estéril",
+    detalle: "Último día para introducir en el mercado productos autodeclarados con la Directiva que con el IVDR son de clase B o de clase A estéril.",
+    base: "Art. 110 IVDR, modificado por el Reglamento (UE) 2024/1860.", fuente: "r2024" },
+
+  { id: "eud-aviso", reloj: "eud", fecha: "2025-11-27", mayor: true, pos: "b", corto: "Aviso en el DOUE",
+    titulo: "EUDAMED: aviso de funcionalidad",
+    detalle: "Se publica en el DOUE la Decisión (UE) 2025/2371, que declara funcionales cuatro módulos: registro de actores, UDI/dispositivos, organismos notificados y certificados, y vigilancia del mercado. Con ella empiezan a contar los plazos del reloj 2.",
+    base: "Art. 34 y art. 123 MDR (art. 113 IVDR), modificados por el Reglamento (UE) 2024/1860.", fuente: "d2025" },
+  { id: "eud-oblig", reloj: "eud", fecha: "2026-05-28", mayor: true, pos: "a", corto: "Uso obligatorio",
+    titulo: "EUDAMED: uso obligatorio de los cuatro módulos",
+    detalle: "Seis meses después del aviso, el uso de esos módulos pasa a ser obligatorio. Un producto cuya primera unidad se introduce en el mercado desde esta fecha debe registrarse antes de introducirla. Los certificados nuevos se registran al emitirse.",
+    base: "Art. 123 MDR y art. 113 IVDR, modificados por el Reglamento (UE) 2024/1860.", fuente: "qa" },
+  { id: "eud-reg", reloj: "eud", fecha: "2026-11-28", mayor: true, pos: "b", corto: "Registro de lo ya introducido", destaca: true,
+    titulo: "EUDAMED: registro de los productos ya introducidos",
+    detalle: "Doce meses después del aviso vence el registro de los productos, heredados o conformes al Reglamento, cuya primera unidad se introdujo antes del 28 de mayo de 2026 y de los que se siguen introduciendo unidades. No hace falta registrar los que dejaron de introducirse antes de esa fecha (salvo una acción de vigilancia) ni los heredados cuyo mismo producto ya figura como producto del Reglamento. El registro se hace por UDI-DI (o identificador EUDAMED en los heredados).",
+    base: "Art. 123 MDR y art. 113 IVDR, modificados por el Reglamento (UE) 2024/1860.", fuente: "calDisp" },
+  { id: "eud-cert", reloj: "eud", fecha: "2027-05-28", mayor: true, pos: "a", corto: "Certificados previos",
+    titulo: "EUDAMED: certificados emitidos antes del uso obligatorio",
+    detalle: "Dieciocho meses después del aviso, los organismos notificados deben haber registrado los certificados del MDR y el IVDR emitidos antes del uso obligatorio, solo para productos que deban registrarse y solo en su última versión.",
+    base: "Art. 123 MDR y art. 113 IVDR, modificados por el Reglamento (UE) 2024/1860.", fuente: "calCert" },
+
+  { id: "rev-prop", reloj: "rev", fecha: "2025-12-16", mayor: true, pos: "b", corto: "Propuesta de la Comisión",
+    titulo: "Revisión: la Comisión propone simplificar el MDR y el IVDR",
+    detalle: "La Comisión adopta la propuesta COM(2025) 1023 de revisión de los dos reglamentos. Es una propuesta legislativa en tramitación en el Parlamento Europeo y el Consejo: mientras no se apruebe y se publique en el DOUE, no cambia ninguno de los plazos de esta página.",
+    base: "Procedimiento legislativo ordinario 2025/0404(COD).", fuente: "com" }
 ];
 
 /* ------------------------------------------------------------------
@@ -430,150 +486,268 @@ function fLarga(s){ var d = D(s); return d.getDate() + " de " + MESES_L[d.getMon
 function dias(s){ return Math.round((D(s) - hoy()) / 86400000); }
 function estado(s){
   var n = dias(s);
-  if (n < 0) return { k: "pasado", t: "Vencido" };
+  if (n < 0) return { k: "pasado", t: "Plazo vencido" };
   if (n === 0) return { k: "proximo", t: "Vence hoy" };
   if (n <= 90) return { k: "proximo", t: "Faltan " + n + (n === 1 ? " día" : " días") };
   return { k: "futuro", t: "Pendiente" };
 }
-function chip(s){ var e = estado(s); return '<span class="chip ' + e.k + '">' + e.t + '</span>'; }
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
 function $(id){ return document.getElementById(id); }
 
 /* ------------------------------------------------------------------
-   Líneas temporales (escenas 3 y 5)
+   1. Línea temporal
 ------------------------------------------------------------------ */
-function lineaTemporal(id, desde, hasta, anios, hitos, color){
-  var W = 940, H = 170, L = 20, R = 20, Y = 92;
-  function x(s){ return L + (D(s) - D(desde)) / (D(hasta) - D(desde)) * (W - L - R); }
-  var o = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Línea temporal">'];
-  o.push('<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y + '" y2="' + Y + '" stroke="' + color + '" stroke-width="8" stroke-linecap="round" opacity=".18"/>');
-  anios.forEach(function(a){
-    var xa = x(a + "-01-01");
-    o.push('<line x1="' + xa + '" x2="' + xa + '" y1="' + (Y - 6) + '" y2="' + (Y + 6) + '" stroke="#6C6266"/>');
-    o.push('<text x="' + xa + '" y="' + (H - 4) + '" text-anchor="middle" font-size="12" fill="#6C6266">' + a + '</text>');
+var visibles = { mdr: true, ivdr: true, eud: true, rev: true };
+var seleccionado = "eud-reg";
+var vista = window.matchMedia("(max-width: 700px)").matches ? "lista" : "linea";
+
+function pintarFiltros(){
+  var grupos = [
+    { k: ["mdr","ivdr"], n: "Reloj 1 · Transición", c: "var(--ctrl)" },
+    { k: ["eud"], n: "Reloj 2 · EUDAMED", c: "var(--accent)" },
+    { k: ["rev"], n: "Reloj 3 · Revisión", c: "var(--rev)" }
+  ];
+  $("filtros").innerHTML = grupos.map(function(g, i){
+    return '<button type="button" class="filtro" data-g="' + i + '" style="--c:' + g.c + '" aria-pressed="' + visibles[g.k[0]] + '"><i></i>' + g.n + '</button>';
+  }).join("");
+  Array.prototype.forEach.call($("filtros").querySelectorAll("button"), function(b){
+    b.addEventListener("click", function(){
+      var g = grupos[+b.dataset.g]; var v = !visibles[g.k[0]];
+      g.k.forEach(function(k){ visibles[k] = v; });
+      b.setAttribute("aria-pressed", v);
+      pintarLinea(); pintarLista();
+    });
   });
-  var th = hoy();
-  if (th >= D(desde) && th <= D(hasta)){
-    var xh = L + (th - D(desde)) / (D(hasta) - D(desde)) * (W - L - R);
-    o.push('<line x1="' + xh + '" x2="' + xh + '" y1="6" y2="' + (Y - 12) + '" stroke="#2A2125" stroke-width="1.5" stroke-dasharray="5 4"/>');
-    o.push('<polygon points="' + (xh - 5) + ',' + (Y - 14) + ' ' + (xh + 5) + ',' + (Y - 14) + ' ' + xh + ',' + (Y - 6) + '" fill="#2A2125"/>');
-    o.push('<text x="' + (xh + 5) + '" y="14" font-size="11" font-weight="600" fill="#2A2125">HOY</text>');
+}
+
+var X0 = D("2024-01-01"), X1 = D("2030-04-01");
+function pintarLinea(){
+  var W = 1080, L = 150, R = 24;
+  var carriles = ["mdr","ivdr","eud","rev"].filter(function(k){ return visibles[k]; });
+  var alto = { mdr: 112, ivdr: 96, eud: 128, rev: 88 };
+  var y = 26, Y = {};
+  carriles.forEach(function(k){ Y[k] = y + (k === "eud" ? 64 : (k === "mdr" ? 54 : 30)); y += alto[k]; });
+  var H = y + 34;
+  function x(s){ var d = (typeof s === "string") ? D(s) : s; return L + (d - X0) / (X1 - X0) * (W - L - R); }
+  var o = [];
+  o.push('<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Línea temporal de los plazos MDR, IVDR, EUDAMED y revisión">');
+  for (var a = 2024; a <= 2030; a++){
+    var xa = x(a + "-01-01");
+    o.push('<line x1="' + xa + '" x2="' + xa + '" y1="18" y2="' + (H - 26) + '" stroke="var(--line)"/>');
+    o.push('<text class="eje" x="' + xa + '" y="' + (H - 8) + '" text-anchor="middle">' + a + '</text>');
   }
-  hitos.forEach(function(h){
-    var xx = x(h.f), arriba = h.pos === "a", anc = h.anc || "middle";
-    var r = h.dest ? 10 : (h.menor ? 5 : 8);
-    o.push('<circle cx="' + xx + '" cy="' + Y + '" r="' + r + '" fill="' + (h.menor ? '#fff' : color) + '" stroke="' + (h.menor ? color : '#fff') + '" stroke-width="2.5"/>');
-    var y1 = arriba ? Y - 40 : Y + 32, y2 = arriba ? Y - 24 : Y + 48;
-    o.push('<text x="' + xx + '" y="' + y1 + '" text-anchor="' + anc + '" font-size="14" font-weight="700" fill="' + (h.dest ? color : '#2A2125') + '">' + fCorta(h.f) + '</text>');
-    o.push('<text x="' + xx + '" y="' + y2 + '" text-anchor="' + anc + '" font-size="12" fill="#6C6266">' + esc(h.t) + '</text>');
+  var th = hoy();
+  if (th >= X0 && th <= X1){
+    var xh = x(th);
+    o.push('<line x1="' + xh + '" x2="' + xh + '" y1="18" y2="' + (H - 26) + '" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4"/>');
+    o.push('<text class="hoy-t" x="' + (xh + 5) + '" y="14">HOY</text>');
+  }
+  carriles.forEach(function(k){
+    var r = RELOJES[k], yy = Y[k];
+    var hs = HITOS.filter(function(h){ return h.reloj === k; });
+    o.push('<text class="carril-t" x="0" y="' + (yy - 4) + '" fill="' + r.c + '">' + r.n + '</text>');
+    o.push('<text class="carril-s" x="0" y="' + (yy + 12) + '">' + r.s + '</text>');
+    var ini = k === "eud" ? x("2025-11-27") : (k === "rev" ? x("2025-12-16") : L);
+    var fin = k === "mdr" ? x("2028-12-31") : k === "ivdr" ? x("2029-12-31") : k === "eud" ? x("2027-05-28") : x("2027-10-01");
+    if (k === "rev"){
+      o.push('<line x1="' + ini + '" x2="' + fin + '" y1="' + yy + '" y2="' + yy + '" stroke="' + r.c + '" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 9" opacity=".8"/>');
+      o.push('<text class="et sub" x="' + (fin + 12) + '" y="' + (yy + 4) + '" style="fill:' + r.c + ';font-style:italic">En tramitación · no cambia plazos</text>');
+    } else {
+      o.push('<line x1="' + ini + '" x2="' + fin + '" y1="' + yy + '" y2="' + yy + '" stroke="' + r.c + '" stroke-width="7" stroke-linecap="round" opacity=".22"/>');
+    }
+    hs.forEach(function(h){
+      var xx = x(h.fecha), sel = h.id === seleccionado, rad = h.destaca ? 9 : (h.mayor ? 7 : 4.5);
+      var lab = esc(h.titulo) + ", " + fLarga(h.fecha);
+      o.push('<g class="hito' + (sel ? ' sel' : '') + '" data-id="' + h.id + '" tabindex="0" role="button" aria-label="' + lab + '">');
+      o.push('<circle cx="' + xx + '" cy="' + yy + '" r="14" fill="transparent"/>');
+      o.push('<circle class="punto" cx="' + xx + '" cy="' + yy + '" r="' + rad + '" fill="' + (h.mayor ? r.c : 'var(--surface)') + '" stroke="' + (h.mayor ? 'var(--surface)' : r.c) + '" stroke-width="' + (h.mayor ? 2.5 : 2) + '"/>');
+      if (h.mayor){
+        var arriba = h.pos === "a", ty = arriba ? yy - 32 : yy + 26, ts = arriba ? yy - 18 : yy + 40;
+        var anc = "middle", xt = xx;
+        if (h.destaca){ anc = "start"; xt = xx + 4; }
+        else if (xx < L + 40) anc = "start"; else if (xx > W - R - 70) anc = "end";
+        o.push('<text class="et" x="' + xt + '" y="' + ty + '" text-anchor="' + anc + '"' + (h.destaca ? ' style="fill:' + r.c + '"' : '') + '>' + fCorta(h.fecha) + '</text>');
+        o.push('<text class="et sub" x="' + xt + '" y="' + ts + '" text-anchor="' + anc + '">' + esc(h.corto) + '</text>');
+      }
+      o.push('</g>');
+    });
   });
   o.push('</svg>');
-  $(id).innerHTML = o.join("");
+  $("linea").innerHTML = o.join("");
+  Array.prototype.forEach.call($("linea").querySelectorAll(".hito"), function(g){
+    g.addEventListener("click", function(){ elegir(g.dataset.id); });
+    g.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); elegir(g.dataset.id); } });
+  });
+}
+
+function pintarLista(){
+  var hs = HITOS.filter(function(h){ return visibles[h.reloj]; }).slice().sort(function(a, b){ return D(a.fecha) - D(b.fecha); });
+  var porAnio = {}, orden = [];
+  hs.forEach(function(h){ var a = h.fecha.slice(0, 4); if (!porAnio[a]){ porAnio[a] = []; orden.push(a); } porAnio[a].push(h); });
+  var th = hoy(), hoyPuesto = false, o = [];
+  orden.forEach(function(a){
+    var pasado = +a < th.getFullYear();
+    o.push('<div><h3 class="anio' + (pasado ? ' pasado' : '') + '">' + a + '</h3><ul>');
+    porAnio[a].forEach(function(h){
+      if (!hoyPuesto && D(h.fecha) >= th){ o.push('<li class="hoy" aria-label="Hoy">HOY · ' + fCorta(REVHOY()) + '</li>'); hoyPuesto = true; }
+      var r = RELOJES[h.reloj], p = D(h.fecha) < th;
+      o.push('<li class="' + (p ? 'pasado' : '') + '"><button type="button" data-id="' + h.id + '" style="--c:' + r.c + '" aria-current="' + (h.id === seleccionado) + '"><span class="f">' + fCorta(h.fecha) + '</span><span class="t">' + esc(h.titulo) + '</span><span class="r">' + r.g + ' · ' + r.n + '</span></button></li>');
+    });
+    o.push('</ul></div>');
+  });
+  $("lista").innerHTML = o.join("");
+  Array.prototype.forEach.call($("lista").querySelectorAll("button[data-id]"), function(b){
+    b.addEventListener("click", function(){ elegir(b.dataset.id); });
+  });
+}
+function REVHOY(){ var d = hoy(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+
+function pintarDetalle(){
+  var h = HITOS.filter(function(x){ return x.id === seleccionado; })[0];
+  if (!h){ $("detalle").innerHTML = ""; return; }
+  var r = RELOJES[h.reloj], e = estado(h.fecha), f = FUENTES[h.fuente];
+  $("detalle").innerHTML =
+    '<article class="detalle" style="--c:' + r.c + '">' +
+      '<div class="cab"><span class="eyebrow" style="color:' + r.c + '">' + r.g + ' · ' + r.n + '</span><span class="estado ' + e.k + '">' + e.t + '</span></div>' +
+      '<h3>' + esc(h.titulo) + '</h3>' +
+      '<span class="fecha">' + fLarga(h.fecha) + '</span>' +
+      '<p>' + esc(h.detalle) + '</p>' +
+      '<p class="base">' + esc(h.base) + ' Fuente: <a href="' + f.u + '" target="_blank" rel="noopener">' + esc(f.t) + '</a>.</p>' +
+    '</article>';
+}
+function elegir(id){ seleccionado = id; pintarLinea(); pintarLista(); pintarDetalle(); }
+
+function ponerVista(v){
+  vista = v;
+  $("v-linea").setAttribute("aria-pressed", v === "linea");
+  $("v-lista").setAttribute("aria-pressed", v === "lista");
+  $("linea").hidden = v !== "linea";
+  $("lista").hidden = v !== "lista";
 }
 
 /* ------------------------------------------------------------------
-   Comprobador (escena 7)
+   2. Comprobador
 ------------------------------------------------------------------ */
 var PREG = {
-  reg: { n: "1", t: "Reglamento", o: [ { v: "mdr", b: "MDR" }, { v: "ivdr", b: "IVDR" } ] },
-  sit_mdr: { n: "2", t: "Situación del producto", o: [
-    { v: "conforme", b: "Conforme al MDR" }, { v: "cert", b: "Heredado con certificado" },
-    { v: "autodecl", b: "Clase I que ahora necesita ON" }, { v: "clasei", b: "Clase I sin ON" }, { v: "medida", b: "III a medida" } ] },
-  sit_ivdr: { n: "2", t: "Situación del producto", o: [
-    { v: "conforme", b: "Conforme al IVDR" }, { v: "cert", b: "Heredado con certificado" },
-    { v: "autodecl", b: "Autodeclarado que necesita ON" }, { v: "clasea", b: "Clase A no estéril" } ] },
-  clase_mdr: { n: "3", t: "Clase con el MDR", o: [
-    { v: "III", b: "III" }, { v: "IIb-impl", b: "IIb implantable" }, { v: "IIb-wet", b: "IIb impl. bien establecida" },
-    { v: "IIb", b: "IIb no impl." }, { v: "IIa", b: "IIa" }, { v: "Ism", b: "Is o Im" } ] },
-  clase_ivdr: { n: "3", t: "Clase con el IVDR", o: [ { v: "D", b: "D" }, { v: "C", b: "C" }, { v: "B", b: "B" }, { v: "As", b: "A estéril" } ] },
-  cond: { n: "4", t: "¿Cumple las condiciones?", o: [ { v: "si", b: "Sí" }, { v: "no", b: "No" }, { v: "nose", b: "No lo sé" } ] },
-  eud: { n: "5", t: "Introducción respecto al 28 may 2026", o: [
-    { v: "sigue", b: "Empezó antes y sigue" }, { v: "nuevo", b: "Empieza después" }, { v: "cesado", b: "Cesó antes" } ] },
-  mismo: { n: "6", t: "¿Versión del Reglamento ya registrada?", o: [ { v: "si", b: "Sí" }, { v: "no", b: "No" } ] }
+  reg: { n: "1", t: "¿Qué reglamento se aplica al producto?", o: [
+    { v: "mdr", b: "MDR · Reglamento (UE) 2017/745", s: "Productos sanitarios" },
+    { v: "ivdr", b: "IVDR · Reglamento (UE) 2017/746", s: "Productos sanitarios para diagnóstico in vitro" } ] },
+  sit_mdr: { n: "2", t: "¿En qué situación está el producto?", o: [
+    { v: "conforme", b: "Conforme al MDR", s: "Tiene certificado del MDR o declaración de conformidad según el MDR" },
+    { v: "cert", b: "Heredado con certificado de la Directiva", s: "Certificado MDD o AIMDD válido el 26 de mayo de 2021" },
+    { v: "autodecl", b: "Heredado autodeclarado que ahora necesita ON", s: "Clase I con la MDD que con el MDR requiere organismo notificado (p. ej., Is, Im, Ir o reclasificado)" },
+    { v: "clasei", b: "Clase I que sigue sin necesitar ON", s: "Autodeclarado con la MDD y con el MDR" },
+    { v: "medida", b: "Implantable a medida de clase III", s: "Producto a medida" } ] },
+  sit_ivdr: { n: "2", t: "¿En qué situación está el producto?", o: [
+    { v: "conforme", b: "Conforme al IVDR", s: "Tiene certificado del IVDR o declaración de conformidad según el IVDR" },
+    { v: "cert", b: "Heredado con certificado IVDD", s: "Certificado de la Directiva 98/79/CE" },
+    { v: "autodecl", b: "Heredado autodeclarado que ahora necesita ON", s: "Autodeclarado con la IVDD y de clase D, C, B o A estéril con el IVDR" },
+    { v: "clasea", b: "Clase A no estéril", s: "Autodeclarado con la IVDD y con el IVDR" } ] },
+  clase_mdr: { n: "3", t: "¿Qué clase tiene con el MDR?", o: [
+    { v: "III", b: "Clase III", s: "" },
+    { v: "IIb-impl", b: "Clase IIb implantable", s: "Salvo tecnología bien establecida" },
+    { v: "IIb-wet", b: "IIb implantable de tecnología bien establecida", s: "Suturas, grapas, empastes, brackets, coronas, tornillos, cuñas, placas, alambres, pernos, clips, conectores" },
+    { v: "IIb", b: "Clase IIb no implantable", s: "" },
+    { v: "IIa", b: "Clase IIa", s: "" },
+    { v: "Ism", b: "Clase Is o Im", s: "Estéril o con función de medición" } ] },
+  clase_ivdr: { n: "3", t: "¿Qué clase tiene con el IVDR?", o: [
+    { v: "D", b: "Clase D", s: "" }, { v: "C", b: "Clase C", s: "" },
+    { v: "B", b: "Clase B", s: "" }, { v: "As", b: "Clase A estéril", s: "" } ] },
+  cond: { n: "4", t: "¿Cumple las condiciones para acogerse a la ampliación?", o: [
+    { v: "si", b: "Sí, las cumple", s: "" },
+    { v: "no", b: "No", s: "" },
+    { v: "nose", b: "No lo sé", s: "Mostrar las condiciones para comprobarlas" } ] },
+  eud: { n: "5", t: "¿Cuándo se introduce o se introdujo en el mercado?", o: [
+    { v: "sigue", b: "Antes del 28 may 2026 y se siguen introduciendo unidades", s: "" },
+    { v: "nuevo", b: "La primera unidad, a partir del 28 may 2026", s: "" },
+    { v: "cesado", b: "Se dejó de introducir antes del 28 may 2026", s: "" } ] },
+  mismo: { n: "6", t: "¿El mismo producto ya está registrado como producto del Reglamento?", o: [
+    { v: "si", b: "Sí", s: "Mismo UDI-DI, referencia o nombre comercial" },
+    { v: "no", b: "No", s: "" } ] }
 };
 
-var CASOS = [
-  { c: "Monitor", titulo: "Monitor multiparamétrico de UCI",
-    enun: "Monitor de constantes vitales con certificado MDD vigente en mayo de 2021. Con el MDR es de clase IIb y no es implantable. Cumple las condiciones y sigue introduciendo unidades; aún no tiene versión certificada con el MDR.",
-    r: { reg: "mdr", sit: "cert", clase: "IIb", cond: "si", eud: "sigue", mismo: "no" },
-    sol: "Reloj 1: hasta el 31 de diciembre de 2028, porque no es clase III ni IIb implantable. Reloj 2: como se sigue introduciendo, debe registrarse antes del 28 de noviembre de 2026. La transición larga no retrasa el registro." },
-  { c: "Prótesis", titulo: "Prótesis total de cadera",
-    enun: "Prótesis con certificado MDD, clase III con el MDR. El fabricante ya tiene el certificado del MDR para el mismo modelo (mismo nombre comercial y referencia) y lo ha registrado en EUDAMED, pero sigue introduciendo unidades heredadas.",
-    r: { reg: "mdr", sit: "cert", clase: "III", cond: "si", eud: "sigue", mismo: "si" },
-    sol: "Reloj 1: las unidades heredadas solo pueden introducirse hasta el 31 de diciembre de 2027 (clase III). Reloj 2: no hace falta registrar la versión heredada, porque el mismo producto ya figura como producto del Reglamento, salvo que una acción de vigilancia afecte solo al heredado." },
-  { c: "Tornillo", titulo: "Tornillo de osteosíntesis",
-    enun: "Tornillo implantable de clase IIb con certificado MDD. El fabricante cumple las condiciones y sigue introduciendo unidades.",
-    r: { reg: "mdr", sit: "cert", clase: "IIb-wet", cond: "si", eud: "sigue", mismo: "no" },
-    sol: "Es IIb implantable, pero los tornillos están en la lista de tecnología bien establecida: su plazo es el 31 de diciembre de 2028 y no 2027. El registro en EUDAMED vence igualmente el 28 de noviembre de 2026." },
-  { c: "Pinzas", titulo: "Instrumental quirúrgico reutilizable",
-    enun: "Pinzas reutilizables autodeclaradas como clase I con la MDD. Con el MDR son de clase Ir y necesitan organismo notificado. Cumple las condiciones, pero dejó de introducir unidades heredadas en marzo de 2026 mientras prepara la versión MDR.",
-    r: { reg: "mdr", sit: "autodecl", cond: "si", eud: "cesado" },
-    sol: "Reloj 1: su transición llegaría al 31 de diciembre de 2028. Reloj 2: como dejó de introducirse antes del 28 de mayo de 2026, no hay que registrarlo, salvo que surja una acción de vigilancia. Las pinzas ya distribuidas pueden seguir comercializándose." },
-  { c: "Glucómetro", titulo: "Glucómetro para autodiagnóstico",
-    enun: "Sistema de medición de glucosa en sangre para autodiagnóstico con certificado de la Directiva 98/79/CE. Con el IVDR es de clase C. Cumple las condiciones y sigue introduciendo unidades.",
-    r: { reg: "ivdr", sit: "cert", cond: "si", eud: "sigue", mismo: "no" },
-    sol: "Aunque con el IVDR sea de clase C, lo que decide el plazo es que tiene certificado IVDD: puede introducirse hasta el 31 de diciembre de 2027, no hasta 2028. El registro en EUDAMED vence el 28 de noviembre de 2026." },
-  { c: "Gonococo", titulo: "Prueba molecular de gonococo",
-    enun: "Prueba de amplificación de ácidos nucleicos para detectar Neisseria gonorrhoeae, autodeclarada con la Directiva. Con el IVDR es de clase C. El fabricante no está seguro de haber cumplido a tiempo los hitos con el organismo notificado.",
-    r: { reg: "ivdr", sit: "autodecl", clase: "C", cond: "nose", eud: "sigue", mismo: "no" },
-    sol: "Su transición podría llegar al 31 de diciembre de 2028, pero solo si tenía el sistema de calidad IVDR el 26 de mayo de 2025, solicitó la evaluación antes del 26 de mayo de 2026 y firmó el acuerdo antes del 26 de septiembre de 2026. Si falló alguno, no puede acogerse a la ampliación." }
-];
-
-var R = {}, casoActivo = -1, verSol = false;
+var R = {};
+function pintarPreg(cont, clave, nombre){
+  var p = PREG[clave];
+  $(cont).innerHTML = '<div class="pt"><span class="n">' + p.n + '</span><b>' + p.t + '</b></div><div class="opts" role="radiogroup" aria-label="' + esc(p.t) + '">' +
+    p.o.map(function(o, i){
+      var id = nombre + "-" + i;
+      return '<div><input type="radio" name="' + nombre + '" id="' + id + '" value="' + o.v + '"' + (R[nombre] === o.v ? " checked" : "") + '><label for="' + id + '"><b>' + esc(o.b) + '</b>' + (o.s ? '<span>' + esc(o.s) + '</span>' : '') + '</label></div>';
+    }).join("") + '</div>';
+  Array.prototype.forEach.call($(cont).querySelectorAll("input"), function(inp){
+    inp.addEventListener("change", function(){ R[nombre] = inp.value; limpiarDesde(nombre); actualizar(); });
+  });
+}
 var ORDEN = ["reg","sit","clase","cond","eud","mismo"];
+function limpiarDesde(nombre){
+  var i = ORDEN.indexOf(nombre);
+  ORDEN.slice(i + 1).forEach(function(k){ if (k !== "eud") delete R[k]; });
+  if (nombre === "reg" || nombre === "sit") delete R.eud;
+}
+
 function necesitaClase(){ return R.sit === "cert" && R.reg === "mdr" || R.sit === "autodecl" && R.reg === "ivdr"; }
 function esTransicion(){ return ["cert","autodecl","medida"].indexOf(R.sit) >= 0; }
 function esHeredado(){ return ["cert","autodecl"].indexOf(R.sit) >= 0; }
 
-function visibles(){
-  var v = ["reg"];
-  if (!R.reg) return v;
-  v.push("sit");
-  if (!R.sit) return v;
-  if (necesitaClase()){ v.push("clase"); if (!R.clase) return v; }
-  if (esTransicion()){ v.push("cond"); if (!R.cond) return v; }
-  if (R.sit === "medida") return v;
-  v.push("eud");
-  if (esHeredado() && R.eud === "sigue") v.push("mismo");
-  return v;
+function actualizar(){
+  pintarPreg("p-reg", "reg", "reg");
+  var vSit = !!R.reg;
+  $("p-sit").hidden = !vSit;
+  if (vSit) pintarPreg("p-sit", "sit_" + R.reg, "sit");
+  var vClase = vSit && !!R.sit && necesitaClase();
+  $("p-clase").hidden = !vClase;
+  if (vClase) pintarPreg("p-clase", "clase_" + R.reg, "clase");
+  var vCond = vSit && !!R.sit && esTransicion() && (!necesitaClase() || !!R.clase);
+  $("p-cond").hidden = !vCond;
+  if (vCond) pintarPreg("p-cond", "cond", "cond");
+  var listoIntro = vSit && !!R.sit && (!esTransicion() || !!R.cond) && (!necesitaClase() || !!R.clase);
+  var vEud = listoIntro && R.sit !== "medida";
+  $("p-eud").hidden = !vEud;
+  if (vEud) pintarPreg("p-eud", "eud", "eud");
+  var vMismo = vEud && esHeredado() && R.eud === "sigue";
+  $("p-mismo").hidden = !vMismo;
+  if (vMismo) pintarPreg("p-mismo", "mismo", "mismo");
+  pintarPanel(evaluar());
 }
 
 function condiciones(){
   var c = [];
   if (R.reg === "mdr" && R.sit === "medida"){
-    c.push({ t: "Solicitud a un organismo notificado", f: "2024-05-26" });
+    c.push({ t: "Solicitud formal a un organismo notificado (certificación del sistema de calidad)", f: "2024-05-26" });
     c.push({ t: "Acuerdo escrito con el organismo notificado", f: "2024-09-26" });
   } else if (R.reg === "mdr"){
-    c.push({ t: "Sigue cumpliendo la Directiva" });
-    c.push({ t: "Sin cambios significativos" });
-    c.push({ t: "Sin riesgo inaceptable" });
-    c.push({ t: "Sistema de calidad conforme al MDR", f: "2024-05-26" });
-    c.push({ t: "Solicitud a un organismo notificado", f: "2024-05-26" });
-    c.push({ t: "Acuerdo escrito con el ON", f: "2024-09-26" });
+    c.push({ t: "Sigue cumpliendo la Directiva (MDD o AIMDD)" });
+    c.push({ t: "Sin cambios significativos de diseño ni de finalidad prevista" });
+    c.push({ t: "No presenta un riesgo inaceptable para la salud o la seguridad" });
+    c.push({ t: "Sistema de gestión de la calidad conforme al MDR", f: "2024-05-26" });
+    c.push({ t: "Solicitud formal a un organismo notificado", f: "2024-05-26" });
+    c.push({ t: "Acuerdo escrito con el organismo notificado", f: "2024-09-26" });
   } else {
     var sol = { D: "2025-05-26", C: "2026-05-26", B: "2027-05-26", As: "2027-05-26" };
     var ac = { D: "2025-09-26", C: "2026-09-26", B: "2027-09-26", As: "2027-09-26" };
     var k = R.sit === "cert" ? "D" : R.clase;
     c.push({ t: "Sigue cumpliendo la Directiva 98/79/CE" });
-    c.push({ t: "Sin cambios significativos" });
-    c.push({ t: "Sin riesgo inaceptable" });
-    c.push({ t: "Sistema de calidad conforme al IVDR", f: "2025-05-26" });
-    c.push({ t: "Solicitud a un organismo notificado", f: sol[k] });
-    c.push({ t: "Acuerdo escrito con el ON", f: ac[k] });
+    c.push({ t: "Sin cambios significativos de diseño ni de finalidad prevista" });
+    c.push({ t: "No presenta un riesgo inaceptable para la salud o la seguridad" });
+    c.push({ t: "Sistema de gestión de la calidad conforme al IVDR", f: "2025-05-26" });
+    c.push({ t: "Solicitud formal a un organismo notificado", f: sol[k] });
+    c.push({ t: "Acuerdo escrito con el organismo notificado", f: ac[k] });
   }
   return c;
 }
 
 function evaluar(){
   if (!R.reg || !R.sit) return null;
-  var out = { intro: null, comerc: null, eud: null, cert: null };
+  var out = { intro: null, comerc: null, eud: null, cert: null, notas: [] };
   var reg = R.reg === "mdr" ? "MDR" : "IVDR";
+
+  /* Reloj 1: introducción en el mercado */
   if (R.sit === "conforme"){
-    out.intro = { tipo: "sin", titulo: "Sin plazo de transición", texto: "Puede introducirse mientras siga siendo conforme al " + reg + " y, si lo tiene, mientras su certificado esté vigente." };
+    out.intro = { tipo: "sin", titulo: "Sin plazo de transición", texto: "Puede introducirse en el mercado mientras siga siendo conforme al " + reg + " (y, si lo tiene, mientras su certificado esté vigente)." };
   } else if (R.sit === "clasei"){
-    out.intro = { tipo: "sin", titulo: "Sin transición", texto: "Debe cumplir el MDR desde el 26 de mayo de 2021, con su declaración de conformidad según el MDR." };
+    out.intro = { tipo: "sin", titulo: "Sin transición", texto: "No hay periodo transitorio: debe cumplir el MDR desde el 26 de mayo de 2021, con su declaración de conformidad según el MDR." };
   } else if (R.sit === "clasea"){
-    out.intro = { tipo: "sin", titulo: "Sin transición", texto: "Debe cumplir el IVDR desde el 26 de mayo de 2022." };
+    out.intro = { tipo: "sin", titulo: "Sin transición", texto: "No hay periodo transitorio: debe cumplir el IVDR desde el 26 de mayo de 2022." };
   } else {
     if (necesitaClase() && !R.clase) return out;
     var fecha;
@@ -589,111 +763,168 @@ function evaluar(){
     if (R.cond === "no"){
       out.intro = { tipo: "no", titulo: "No puede acogerse a la ampliación",
         texto: R.reg === "mdr"
-          ? "Sin esas condiciones, su transición terminó el 26 de mayo de 2024. Solo puede introducirse si cumple el MDR."
-          : "Sin esas condiciones no se aplica la ampliación del 2024/1860. Para seguir introduciéndolo debe cumplir el IVDR." };
+          ? "Sin esas condiciones, la transición del producto terminó el 26 de mayo de 2024. Hoy solo puede introducirse en el mercado si cumple el MDR."
+          : "Sin esas condiciones no se aplica la ampliación del Reglamento (UE) 2024/1860. Para seguir introduciéndolo debe cumplir el IVDR; revisa la situación concreta con el organismo notificado." };
     } else {
-      out.intro = { tipo: "fecha", fecha: fecha, titulo: "Hasta el " + fLarga(fecha),
+      out.intro = { tipo: "fecha", fecha: fecha,
+        titulo: "Hasta el " + fLarga(fecha),
         texto: R.sit === "medida"
-          ? "Desde esa fecha necesita el certificado del sistema de calidad emitido por un organismo notificado."
-          : "Último día para introducir unidades del producto heredado. Después, solo con certificado del " + reg + "." };
-      out.intro.cond = condiciones();
+          ? "Desde esa fecha, el producto necesita el certificado del sistema de calidad emitido por un organismo notificado."
+          : "Último día para introducir en el mercado unidades del producto heredado. Después, solo podrá introducirse con certificado del " + reg + "." };
+      if (R.cond === "nose") out.intro.cond = condiciones();
+      if (R.cond === "si") out.intro.cond = condiciones();
       out.intro.condTitulo = R.cond === "nose" ? "Condiciones que debe cumplir" : "Condiciones (comprobadas)";
     }
-    out.comerc = "Lo introducido legalmente puede seguir comercializándose después: el 2023/607 suprimió la fecha límite de venta.";
+    out.comerc = (out.intro && out.intro.fecha ? "Las unidades introducidas en el mercado antes de esa fecha pueden" : "Las unidades que se introdujeron legalmente en el mercado mientras duró su transición pueden")
+      + " seguir comercializándose después (distribución, venta, puesta a disposición): el Reglamento (UE) 2023/607 suprimió la fecha límite de venta del MDR y el IVDR.";
   }
+  if (!out.comerc) out.comerc = "Sin fecha límite propia: lo que se introduce conforme al " + reg + " puede comercializarse mientras no haya una retirada, una medida de vigilancia del mercado o una caducidad que lo impida.";
+
+  /* Reloj 2: EUDAMED */
   if (R.sit === "medida"){
-    out.eud = { titulo: "No se registra en UDI/Dispositivos", texto: "Los productos a medida no se registran en ese módulo. Para notificar un incidente grave, el fabricante debe registrarse antes como actor." };
+    out.eud = { tipo: "sin", titulo: "No se registra en UDI/Dispositivos", texto: "Los productos a medida no se registran en el módulo UDI/Dispositivos. Si el fabricante tiene que usar EUDAMED (por ejemplo, para notificar un incidente grave), antes debe registrarse como actor." };
   } else if (R.eud){
-    if (R.eud === "cesado") out.eud = { titulo: "No necesita registro", texto: "No se registra, salvo que surja una acción de vigilancia o de seguimiento poscomercialización." };
-    else if (R.eud === "nuevo") out.eud = { titulo: "Antes de la primera unidad", texto: "El registro en UDI/Dispositivos debe hacerse antes de introducirla. Un registro por UDI-DI cubre todas las unidades." };
-    else if (esHeredado() && R.mismo === "si") out.eud = { titulo: "No hace falta registrar el heredado", texto: "El mismo producto ya figura como producto del Reglamento. Solo habría que registrarlo si una acción de vigilancia le afecta a él." };
-    else if (esHeredado() && !R.mismo) out.eud = null;
-    else out.eud = { fecha: "2026-11-28", titulo: "Hasta el 28 de noviembre de 2026", texto: "Doce meses después del aviso del 27 de noviembre de 2025. Registro por " + (esHeredado() ? "UDI-DI o identificador EUDAMED" : "UDI-DI") + "." };
+    if (R.eud === "cesado"){
+      out.eud = { tipo: "sin", titulo: "No necesita registro", texto: "Los productos de los que ya no se introducen unidades desde el 28 de mayo de 2026 no se registran, salvo que surja una acción de vigilancia o de seguimiento poscomercialización." };
+    } else if (R.eud === "nuevo"){
+      out.eud = { tipo: "pasado-ok", titulo: "Antes de introducir la primera unidad", texto: "Desde el 28 de mayo de 2026, el registro en el módulo UDI/Dispositivos debe hacerse antes de introducir la primera unidad. Un solo registro por UDI-DI cubre todas las unidades." };
+    } else if (esHeredado() && R.mismo === "si"){
+      out.eud = { tipo: "sin", titulo: "No hace falta registrar el heredado", texto: "El mismo producto ya figura como producto del Reglamento. Solo habría que registrar el heredado si una acción de vigilancia le afecta a él y no al producto del Reglamento." };
+    } else if (esHeredado() && !R.mismo){
+      out.eud = null;
+    } else {
+      out.eud = { tipo: "fecha", fecha: "2026-11-28", titulo: "Hasta el 28 de noviembre de 2026",
+        texto: "Doce meses después del aviso de funcionalidad publicado el 27 de noviembre de 2025. El registro se hace por " + (esHeredado() ? "UDI-DI o identificador EUDAMED" : "UDI-DI") + " y cubre todas las unidades." };
+    }
   }
-  if (R.sit === "conforme") out.cert = "Si tiene certificado del " + reg + " emitido antes del 28 de mayo de 2026, el organismo notificado debe registrarlo antes del 28 de mayo de 2027 (solo la última versión).";
+
+  /* Certificados */
+  if (R.sit === "conforme"){
+    out.cert = "Si el producto tiene un certificado del " + reg + " emitido antes del 28 de mayo de 2026, el organismo notificado debe registrarlo en EUDAMED a más tardar el 28 de mayo de 2027 (solo la última versión). Los certificados emitidos después se registran al emitirse.";
+  }
   return out;
 }
 
 function chipCond(f){
-  if (R.cond === "si") return '<span class="chip sin">Cumplida</span>';
-  if (dias(f) < 0) return '<span class="chip pasado">Debió cumplirse</span>';
-  return chip(f);
+  if (R.cond === "si") return '<span class="estado sin">Cumplida</span>';
+  if (dias(f) < 0) return '<span class="estado pasado">Debió cumplirse</span>';
+  return chipFecha(f);
 }
-
-function pintarComp(){
-  /* Barra de casos */
-  $("casosbar").innerHTML = '<span class="lbl">Casos</span>' + CASOS.map(function(c, i){
-    return '<button type="button" data-caso="' + i + '" aria-pressed="' + (i === casoActivo) + '">' + (i + 1) + '. ' + esc(c.c) + '</button>';
-  }).join("") + '<button type="button" class="limpiar" data-caso="-1">Empezar de nuevo</button>';
-  /* Preguntas */
+function chipFecha(f){ var e = estado(f); return '<span class="estado ' + e.k + '">' + e.t + '</span>'; }
+function pintarPanel(r){
   var o = [];
-  if (casoActivo >= 0){
-    o.push('<div class="enun"><b>' + esc(CASOS[casoActivo].titulo) + '.</b> ' + esc(CASOS[casoActivo].enun) + '</div>');
-    o.push(verSol ? '<div class="sol"><b>Solución comentada.</b> ' + esc(CASOS[casoActivo].sol) + '</div>'
-                  : '<div><button type="button" class="acc sec" id="ver-sol">Ver la solución comentada</button></div>');
-  }
-  visibles().forEach(function(k){
-    var clave = (k === "sit" || k === "clase") ? k + "_" + R.reg : k, p = PREG[clave];
-    o.push('<div class="pq"><p class="t"><span>' + p.n + '</span>' + esc(p.t) + '</p><div class="ops">' + p.o.map(function(op){
-      return '<button type="button" class="bt" data-k="' + k + '" data-v="' + op.v + '" aria-pressed="' + (R[k] === op.v) + '">' + esc(op.b) + '</button>';
-    }).join("") + '</div></div>');
-  });
-  $("preguntas").innerHTML = o.join("");
-  /* Resultado */
-  var r = evaluar(), h = [];
   if (!r){
-    h.push('<div class="rbox vacio"><div class="h">Resultado</div><p>Responde a las preguntas o carga un caso. Aquí verás por separado lo que dice cada reloj.</p></div>');
+    o.push('<div class="card k0"><h3>Resultado</h3><p class="vacio">Responde a las preguntas y aquí verás, por separado, lo que dice cada reloj sobre el producto.</p></div>');
   } else {
-    var c1 = r.intro ? (r.intro.fecha ? chip(r.intro.fecha) : (r.intro.tipo === "no" ? '<span class="chip no">Fuera de plazo</span>' : '<span class="chip sin">Sin transición</span>')) : "";
-    h.push('<div class="rbox" style="--c:var(--pizarra)"><div class="h">Reloj 1 · Introducción' + c1 + '</div>');
+    o.push('<div class="card k1"><h3>Reloj 1 · Introducción en el mercado' + (r.intro && r.intro.fecha ? chipFecha(r.intro.fecha) : (r.intro && r.intro.tipo === "no" ? '<span class="estado no">Fuera de plazo</span>' : (r.intro ? '<span class="estado sin">Sin transición</span>' : ''))) + '</h3>');
     if (r.intro){
-      h.push('<p class="big">' + esc(r.intro.titulo) + '</p><p>' + esc(r.intro.texto) + '</p>');
+      o.push('<p class="big">' + esc(r.intro.titulo) + '</p><p>' + esc(r.intro.texto) + '</p>');
       if (r.intro.cond){
-        var fijas = r.intro.cond.filter(function(c){ return !c.f; }).map(function(c, i){ return i ? c.t.charAt(0).toLowerCase() + c.t.slice(1) : c.t.charAt(0).toLowerCase() + c.t.slice(1); });
-        h.push('<ul><li><b>' + r.intro.condTitulo + '</b><span></span></li>' + r.intro.cond.filter(function(c){ return c.f; }).map(function(c){
-          return '<li><span>' + esc(c.t) + '</span><span class="fd">' + fCorta(c.f) + ' ' + chipCond(c.f) + '</span></li>';
-        }).join("") + (fijas.length ? '<li><span>Y siempre: ' + esc(fijas.join(", ")) + '.</span></li>' : '') + '</ul>');
+        o.push('<p style="font-weight:600;margin-top:4px">' + r.intro.condTitulo + '</p><ul class="cond">' + r.intro.cond.map(function(c){
+          return '<li><span>' + esc(c.t) + '</span>' + (c.f ? '<span class="fd">' + fCorta(c.f) + ' ' + chipCond(c.f) + '</span>' : '<span></span>') + '</li>';
+        }).join("") + '</ul>');
+        if (R.cond === "nose") o.push('<p style="font-size:.84rem;color:var(--muted)">Si alguna condición con fecha no se cumplió a tiempo, el producto no puede acogerse a la ampliación.</p>');
       }
-      if (r.comerc) h.push('<p style="margin-top:6px;color:var(--gris)">' + esc(r.comerc) + '</p>');
-    } else h.push('<p style="color:var(--gris)">Faltan respuestas.</p>');
-    h.push('</div>');
-    h.push('<div class="rbox" style="--c:var(--granate)"><div class="h">Reloj 2 · EUDAMED' + (r.eud && r.eud.fecha ? chip(r.eud.fecha) : '') + '</div>');
-    if (r.eud) h.push('<p class="big">' + esc(r.eud.titulo) + '</p><p>' + esc(r.eud.texto) + '</p>');
-    else h.push('<p style="color:var(--gris)">Faltan respuestas.</p>');
-    if (r.cert) h.push('<p style="margin-top:6px;color:var(--gris)">' + esc(r.cert) + '</p>');
-    h.push('</div>');
-    h.push('<div class="rbox" style="--c:var(--verde)"><div class="h">Reloj 3 · Revisión</div><p>La propuesta COM(2025) 1023 sigue en tramitación y no cambia estos plazos.</p></div>');
+    } else o.push('<p class="vacio">Faltan respuestas.</p>');
+    o.push('</div>');
+    o.push('<div class="card k0"><h3>Comercialización posterior</h3><p>' + esc(r.comerc) + '</p></div>');
+    o.push('<div class="card k2"><h3>Reloj 2 · EUDAMED' + (r.eud && r.eud.fecha ? chipFecha(r.eud.fecha) : '') + '</h3>');
+    if (r.eud) o.push('<p class="big">' + esc(r.eud.titulo) + '</p><p>' + esc(r.eud.texto) + '</p>');
+    else o.push('<p class="vacio">Faltan respuestas.</p>');
+    if (r.cert) o.push('<p style="border-top:1px solid var(--line);padding-top:8px;margin-top:4px">' + esc(r.cert) + '</p>');
+    o.push('</div>');
+    o.push('<div class="card k3"><h3>Reloj 3 · Revisión</h3><p>La propuesta COM(2025) 1023 sigue en tramitación. Mientras no se publique en el DOUE, no cambia ninguno de estos plazos.</p></div>');
+    o.push('<div class="acciones"><button type="button" class="btn" id="copiar">Copiar resumen</button><span class="copiado" id="copiado" hidden>Copiado</span></div>');
   }
-  $("resultado").innerHTML = h.join("");
+  $("panel").innerHTML = o.join("");
+  var b = $("copiar");
+  if (b) b.addEventListener("click", function(){ copiar(resumen(r)); });
 }
 
-$("e6").addEventListener("click", function(ev){
-  var b = ev.target.closest("button"); if (!b) return;
-  ev.stopPropagation();
-  if (b.dataset.caso !== undefined){
-    var i = +b.dataset.caso; R = {}; verSol = false; casoActivo = i;
-    if (i >= 0) Object.keys(CASOS[i].r).forEach(function(k){ R[k] = CASOS[i].r[k]; });
-    pintarComp(); return;
-  }
-  if (b.id === "ver-sol"){ verSol = true; pintarComp(); return; }
-  if (b.dataset.k){
-    var k = b.dataset.k, pos = ORDEN.indexOf(k);
-    R[k] = b.dataset.v;
-    ORDEN.slice(pos + 1).forEach(function(x){ if (x !== "eud" || k === "reg" || k === "sit") delete R[x]; });
-    if (k === "eud" && R.eud !== "sigue") delete R.mismo;
-    casoActivo = -1; verSol = false;
-    pintarComp();
-  }
-});
+function textoOpcion(clave, v){ var p = PREG[clave]; if (!p) return v; var o = p.o.filter(function(x){ return x.v === v; })[0]; return o ? o.b : v; }
+function resumen(r){
+  var l = [];
+  l.push("Calendario de plazos MDR/IVDR · comprobación del " + fLarga(REVHOY()));
+  l.push("");
+  l.push("Reglamento: " + textoOpcion("reg", R.reg));
+  l.push("Situación: " + textoOpcion("sit_" + R.reg, R.sit));
+  if (R.clase) l.push("Clase: " + textoOpcion("clase_" + R.reg, R.clase));
+  if (R.cond) l.push("Condiciones de la ampliación: " + textoOpcion("cond", R.cond));
+  if (R.eud) l.push("Introducción en el mercado: " + textoOpcion("eud", R.eud));
+  if (R.mismo) l.push("Mismo producto registrado como producto del Reglamento: " + textoOpcion("mismo", R.mismo));
+  l.push("");
+  if (r.intro) l.push("RELOJ 1 · Introducción en el mercado: " + r.intro.titulo + ". " + r.intro.texto);
+  if (r.intro && r.intro.cond) r.intro.cond.forEach(function(c){ l.push("  - " + c.t + (c.f ? " (" + fCorta(c.f) + ")" : "")); });
+  l.push("Comercialización posterior: " + r.comerc);
+  if (r.eud) l.push("RELOJ 2 · EUDAMED: " + r.eud.titulo + ". " + r.eud.texto);
+  if (r.cert) l.push("Certificados: " + r.cert);
+  l.push("RELOJ 3 · Revisión: la propuesta COM(2025) 1023 sigue en tramitación y no cambia estos plazos.");
+  l.push("");
+  l.push("Resultado orientativo. Normativa revisada el " + fLarga(REVISADO) + ". " + location.href.split("#")[0]);
+  return l.join("\n");
+}
+function copiar(t){
+  function ok(){ var c = $("copiado"); if (c){ c.hidden = false; setTimeout(function(){ c.hidden = true; }, 2000); } }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(ok, function(){ viejo(); });
+  } else viejo();
+  function viejo(){ var a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); ok(); } catch (e) {} document.body.removeChild(a); }
+}
 
 /* ------------------------------------------------------------------
-   Errores frecuentes (escena 8)
+   3. Casos para practicar
+   r: respuestas que se cargan en el comprobador (mismas claves que R)
+------------------------------------------------------------------ */
+var CASOS = [
+  { tag: "MDR · heredado con certificado", titulo: "Monitor multiparamétrico de UCI",
+    enun: "Monitor de constantes vitales con certificado MDD vigente en mayo de 2021. Con el MDR es de clase IIb y no es implantable. El fabricante cumple las condiciones y sigue introduciendo unidades; aún no tiene versión certificada con el MDR.",
+    r: { reg: "mdr", sit: "cert", clase: "IIb", cond: "si", eud: "sigue", mismo: "no" },
+    sol: "Reloj 1: puede introducirse hasta el 31 de diciembre de 2028, porque no es clase III ni IIb implantable. Reloj 2: como se sigue introduciendo, debe registrarse en EUDAMED antes del 28 de noviembre de 2026. Los dos relojes no coinciden: la transición larga no retrasa el registro." },
+  { tag: "MDR · heredado con certificado", titulo: "Prótesis total de cadera",
+    enun: "Prótesis con certificado MDD, clase III con el MDR. El fabricante ya ha obtenido el certificado del MDR para el mismo modelo (mismo nombre comercial y referencia) y lo ha registrado en EUDAMED, pero sigue introduciendo unidades heredadas.",
+    r: { reg: "mdr", sit: "cert", clase: "III", cond: "si", eud: "sigue", mismo: "si" },
+    sol: "Reloj 1: las unidades heredadas solo pueden introducirse hasta el 31 de diciembre de 2027 (clase III). Reloj 2: no hace falta registrar la versión heredada, porque el mismo producto ya figura como producto del Reglamento, salvo que una acción de vigilancia afecte solo al heredado." },
+  { tag: "MDR · tecnología bien establecida", titulo: "Tornillo de osteosíntesis",
+    enun: "Tornillo implantable de clase IIb con certificado MDD. El fabricante cumple las condiciones y sigue introduciendo unidades.",
+    r: { reg: "mdr", sit: "cert", clase: "IIb-wet", cond: "si", eud: "sigue", mismo: "no" },
+    sol: "Es un IIb implantable, pero los tornillos están en la lista de tecnología bien establecida, así que su plazo es el 31 de diciembre de 2028 y no 2027. El registro en EUDAMED vence igualmente el 28 de noviembre de 2026." },
+  { tag: "MDR · clase I que ahora necesita ON", titulo: "Instrumental quirúrgico reutilizable",
+    enun: "Pinzas reutilizables autodeclaradas como clase I con la MDD. Con el MDR son de clase Ir y necesitan organismo notificado. El fabricante cumple las condiciones, pero dejó de introducir unidades heredadas en marzo de 2026 mientras prepara la versión MDR.",
+    r: { reg: "mdr", sit: "autodecl", cond: "si", eud: "cesado" },
+    sol: "Reloj 1: su transición llegaría al 31 de diciembre de 2028. Reloj 2: como dejó de introducirse antes del 28 de mayo de 2026, no hay que registrarlo, salvo que surja una acción de vigilancia. Las pinzas ya distribuidas pueden seguir comercializándose." },
+  { tag: "IVDR · heredado con certificado", titulo: "Glucómetro para autodiagnóstico",
+    enun: "Sistema de medición de glucosa en sangre para autodiagnóstico con certificado de la Directiva 98/79/CE. Con el IVDR es de clase C. Cumple las condiciones y sigue introduciendo unidades.",
+    r: { reg: "ivdr", sit: "cert", cond: "si", eud: "sigue", mismo: "no" },
+    sol: "Aunque con el IVDR sea de clase C, lo que decide el plazo es que tiene certificado IVDD: puede introducirse hasta el 31 de diciembre de 2027, no hasta 2028. El registro en EUDAMED vence el 28 de noviembre de 2026." },
+  { tag: "IVDR · heredado autodeclarado", titulo: "Prueba molecular de gonococo",
+    enun: "Prueba de amplificación de ácidos nucleicos para detectar Neisseria gonorrhoeae, autodeclarada con la Directiva. Con el IVDR es de clase C. El fabricante no está seguro de haber cumplido a tiempo los hitos con el organismo notificado.",
+    r: { reg: "ivdr", sit: "autodecl", clase: "C", cond: "nose", eud: "sigue", mismo: "no" },
+    sol: "Su transición podría llegar al 31 de diciembre de 2028, pero solo si solicitó la evaluación antes del 26 de mayo de 2026 y firmó el acuerdo escrito antes del 26 de septiembre de 2026, además de tener el sistema de calidad IVDR desde el 26 de mayo de 2025. Si falló alguno, no puede acogerse a la ampliación." }
+];
+function pintarCasos(){
+  $("casos-lista").innerHTML = CASOS.map(function(c, i){
+    return '<article class="caso"><span class="tag">' + esc(c.tag) + '</span><h3>' + esc(c.titulo) + '</h3><p class="enun">' + esc(c.enun) + '</p>' +
+      '<div class="acciones"><button type="button" class="btn primary" data-caso="' + i + '">Cargar en el comprobador</button></div>' +
+      '<details><summary>Ver la solución comentada</summary><p>' + esc(c.sol) + '</p></details></article>';
+  }).join("");
+  Array.prototype.forEach.call($("casos-lista").querySelectorAll("button[data-caso]"), function(b){
+    b.addEventListener("click", function(){
+      var c = CASOS[+b.dataset.caso]; R = {};
+      Object.keys(c.r).forEach(function(k){ R[k] = c.r[k]; });
+      actualizar();
+      $("comprobador").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+/* ------------------------------------------------------------------
+   4. Errores frecuentes
 ------------------------------------------------------------------ */
 var MITOS = [
   { a: "Si la transición de mi producto llega hasta 2028, puedo esperar hasta 2028 para registrarlo en EUDAMED.", v: false,
     e: "Son relojes distintos. Si el producto se introducía antes del 28 de mayo de 2026 y se sigue introduciendo, el registro vence el 28 de noviembre de 2026, aunque su transición dure más.", ref: "Art. 123 MDR, modificado por el Reg. (UE) 2024/1860" },
   { a: "Un distribuidor no puede vender un producto heredado después de que termine su periodo de transición.", v: false,
-    e: "Las fechas de transición limitan la introducción en el mercado. Las unidades introducidas antes pueden seguir comercializándose: el Reglamento 2023/607 suprimió la fecha límite de venta.", ref: "Arts. 120(4) MDR y 110(4) IVDR, suprimidos por el Reg. (UE) 2023/607" },
+    e: "Las fechas de transición limitan la introducción en el mercado, es decir, la primera puesta a disposición. Las unidades introducidas antes pueden seguir comercializándose: el Reglamento 2023/607 suprimió la fecha límite de venta.", ref: "Arts. 120(4) MDR y 110(4) IVDR, suprimidos por el Reg. (UE) 2023/607" },
   { a: "Un producto que se dejó de introducir en el mercado antes del 28 de mayo de 2026 no tiene que registrarse en EUDAMED.", v: true,
     e: "Es así, con una excepción: si surge una acción de vigilancia o de seguimiento poscomercialización, habrá que registrarlo para poder notificarla.", ref: "Q&A de la Comisión sobre Eudamed, preguntas 8 y 14" },
   { a: "El Reglamento (UE) 2024/1860 solo amplió los plazos de transición del IVDR.", v: false,
@@ -705,112 +936,48 @@ var MITOS = [
   { a: "El módulo de vigilancia de EUDAMED ya es obligatorio.", v: false,
     e: "Por ahora solo son obligatorios cuatro módulos: actores, UDI/dispositivos, organismos notificados y certificados, y vigilancia del mercado. Los incidentes se siguen notificando por las vías nacionales hasta que el módulo de vigilancia esté disponible.", ref: "Comisión Europea, página de EUDAMED" }
 ];
-var mi = 0, resp = {};
-function pintarVF(){
-  var m = MITOS[mi], r = resp[mi], ok = Object.keys(resp).filter(function(k){ return resp[k] === MITOS[k].v; }).length;
-  var bV = "", bF = "";
-  if (r !== undefined){ bV = (m.v ? "ok" : (r ? "mal" : "")); bF = (!m.v ? "ok" : (!r ? "mal" : "")); }
-  $("vf").innerHTML =
-    '<div class="cab"><span class="lbl" style="margin:0">Afirmación ' + (mi + 1) + ' de ' + MITOS.length + '</span><span class="marcador">Aciertos: <b>' + ok + '</b> de ' + Object.keys(resp).length + '</span></div>' +
-    '<p class="af">' + esc(m.a) + '</p>' +
-    '<div class="bts"><button type="button" data-r="1" class="' + bV + '">Verdadero</button><button type="button" data-r="0" class="' + bF + '">Falso</button></div>' +
-    (r === undefined ? '<div class="fb">Elige una respuesta para ver la explicación.</div>'
-      : '<div class="fb ' + (r === m.v ? 'ok' : 'mal') + '"><b>' + (r === m.v ? 'Correcto: ' : 'No: ') + (m.v ? 'es verdadera.' : 'es falsa.') + '</b> ' + esc(m.e) + '<small>' + esc(m.ref) + '</small></div>') +
-    '<div class="nav"><button type="button" class="acc sec" data-mv="-1"' + (mi === 0 ? ' disabled' : '') + '>← Anterior</button><button type="button" class="acc" data-mv="1"' + (mi === MITOS.length - 1 ? ' disabled' : '') + '>Siguiente afirmación →</button>' +
-    '<div class="dots">' + MITOS.map(function(x, i){ var c = resp[i] === undefined ? "" : (resp[i] === x.v ? "ok" : "mal"); return '<span class="' + c + (i === mi ? ' act' : '') + '"></span>'; }).join("") + '</div></div>';
+var respondidas = {};
+function pintarMitos(){
+  $("mitos").innerHTML = MITOS.map(function(m, i){
+    var r = respondidas[i];
+    var res = "";
+    if (r !== undefined){
+      var bien = r === m.v;
+      res = '<div class="res"><b class="' + (bien ? 'bien' : 'mal') + '">' + (bien ? 'Correcto: ' : 'No: ') + (m.v ? 'es verdadera.' : 'es falsa.') + '</b><span>' + esc(m.e) + '</span><small>' + esc(m.ref) + '</small></div>';
+    }
+    return '<article class="mito"><p class="af">' + esc(m.a) + '</p>' +
+      (r === undefined ? '<div class="vf"><button type="button" data-i="' + i + '" data-v="1">Verdadero</button><button type="button" data-i="' + i + '" data-v="0">Falso</button></div>' : res) + '</article>';
+  }).join("");
+  Array.prototype.forEach.call($("mitos").querySelectorAll("button[data-i]"), function(b){
+    b.addEventListener("click", function(){ respondidas[+b.dataset.i] = b.dataset.v === "1"; pintarMitos(); });
+  });
+  var n = Object.keys(respondidas).length, ok = Object.keys(respondidas).filter(function(k){ return respondidas[k] === MITOS[k].v; }).length;
+  $("marcador").textContent = n ? "Aciertos: " + ok + " de " + n + "." : "";
 }
-$("e7").addEventListener("click", function(ev){
-  var b = ev.target.closest("button"); if (!b) return;
-  ev.stopPropagation();
-  if (b.dataset.r !== undefined && resp[mi] === undefined){ resp[mi] = b.dataset.r === "1"; pintarVF(); }
-  else if (b.dataset.mv){ mi = Math.max(0, Math.min(MITOS.length - 1, mi + +b.dataset.mv)); pintarVF(); }
-});
 
 /* ------------------------------------------------------------------
-   Arranque de las piezas propias
+   Arranque
 ------------------------------------------------------------------ */
-lineaTemporal("tl-mdr", "2024-01-01", "2029-06-30", [2024, 2025, 2026, 2027, 2028, 2029], [
-  { f: "2024-05-26", t: "Calidad y solicitud", pos: "a", menor: true, anc: "start" },
-  { f: "2024-09-26", t: "Acuerdo escrito", pos: "b", menor: true },
-  { f: "2026-05-26", t: "III implantable a medida", pos: "a" },
-  { f: "2027-12-31", t: "III y IIb implantables", pos: "b" },
-  { f: "2028-12-31", t: "Resto de clases", pos: "a", anc: "end" }
-], "#35577A");
-lineaTemporal("tl-eud", "2025-10-01", "2027-08-01", [2026, 2027], [
-  { f: "2025-11-27", t: "Aviso en el DOUE", pos: "b", anc: "start" },
-  { f: "2026-05-28", t: "Uso obligatorio", pos: "a" },
-  { f: "2026-11-28", t: "Registro de lo ya introducido", pos: "b", dest: true },
-  { f: "2027-05-28", t: "Certificados previos", pos: "a", anc: "end" }
-], "#A3002F");
-$("rev-fecha").textContent = "Estado comprobado el " + fLarga(REVISADO);
-$("revisado").textContent = fLarga(REVISADO);
-$("enlace-issues").href = REPO + "/issues";
-$("enlace-codigo").href = REPO + "/tree/main/" + CARPETA;
-pintarComp();
-pintarVF();
-</script>
-<script>
-/* Motor de escenas: el mismo de las presentaciones de la colección de ETS.
-   Único cambio: la fuente admite enlaces. */
-(function(){
-  var escenas=window.ESCENAS,b=document.body,s=0,t=0,nav=document.querySelector("nav.puntos");
-  var $=function(id){return document.getElementById(id)};
-  escenas.forEach(function(e,i){
-    var bt=document.createElement("button");bt.type="button";bt.textContent=(i+1)+". "+e.t;
-    bt.addEventListener("click",function(ev){ev.stopPropagation();ir(i,0);});
-    nav.appendChild(bt);
+function temaInicial(){
+  $("tema").addEventListener("click", function(){
+    var r = document.documentElement, oscuro = r.dataset.theme ? r.dataset.theme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme = oscuro ? "light" : "dark";
+    pintarLinea();
   });
-  function pintar(){
-    b.setAttribute("data-s",s);b.setAttribute("data-t",t);
-    var e=escenas[s];
-    $("num").textContent="Escena "+(s+1)+" de "+escenas.length;
-    $("tit").textContent=e.t;$("preg").textContent=e.p;$("cuerpo").textContent=e.c;$("fuente").innerHTML="Fuente: "+e.f;
-    $("paso").textContent=e.n>1?("Paso "+(t+1)+" de "+e.n):"";
-    $("ant").disabled=(s===0&&t===0);
-    $("sig").disabled=(s===escenas.length-1&&t===e.n-1);
-    nav.querySelectorAll("button").forEach(function(x,i){if(i===s)x.setAttribute("aria-current","step");else x.removeAttribute("aria-current");});
-    document.querySelectorAll("[data-at]").forEach(function(el){var p=el.getAttribute("data-at").split(":");el.classList.toggle("on",+p[0]===s&&t>=+p[1]);});
-    document.querySelectorAll(".esc").forEach(function(el,i){el.setAttribute("aria-hidden",i===s?"false":"true");if("inert" in el)el.inert=(i!==s);});
-    if(window.alPintar)window.alPintar(s,t);
-  }
-  function ir(ns,nt){s=Math.max(0,Math.min(escenas.length-1,ns));t=Math.max(0,Math.min(escenas[s].n-1,nt));pintar();}
-  function sig(){if(t<escenas[s].n-1){t++;pintar();}else if(s<escenas.length-1){ir(s+1,0);}}
-  function ant(){if(t>0){t--;pintar();}else if(s>0){ir(s-1,escenas[s-1].n-1);}}
-  window.irEscena=ir;
-  $("sig").addEventListener("click",function(ev){ev.stopPropagation();sig();});
-  $("ant").addEventListener("click",function(ev){ev.stopPropagation();ant();});
-  $("marco").addEventListener("click",function(ev){if(ev.target.closest(".int,button,select,input,a"))return;sig();});
-  document.addEventListener("keydown",function(ev){
-    var tg=ev.target,enCtl=tg&&tg.closest&&tg.closest("input,select,textarea,.int");
-    if(ev.key==="ArrowRight"||ev.key===" "||ev.key==="PageDown"||ev.key==="Enter"){if(enCtl||(tg.tagName==="BUTTON"&&ev.key!=="ArrowRight"))return;ev.preventDefault();sig();}
-    else if(ev.key==="ArrowLeft"||ev.key==="PageUp"){if(enCtl)return;ev.preventDefault();ant();}
-    else if(ev.key==="Home"){if(enCtl)return;ir(0,0);}
-    else if((ev.key==="f"||ev.key==="F")&&!enCtl){try{if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(function(){});}else{document.exitFullscreen();}}catch(e){}}
-  });
-  function escalar(){
-    var m=$("marco"),st=$("stage"),w=m.clientWidth,h=m.clientHeight;if(!w||!h)return;
-    var k=Math.min(w/1000,h/640)*0.96,x=(w-1000*k)/2,y=(h-640*k)/2;
-    st.style.transform="translate("+x+"px,"+y+"px) scale("+k+")";
-  }
-  window.addEventListener("resize",escalar);
-  if(window.ResizeObserver){new ResizeObserver(escalar).observe($("marco"));}
-  pintar();escalar();
-})();
-</script>
-<script>
-/* Lista de comprobación de la escena 9 (mismo comportamiento que en ETS) */
-(function(){
-  var l=document.getElementById("lista9");if(!l)return;
-  var it=[].slice.call(l.querySelectorAll("div:not(.lbl)")),c=document.getElementById("cuenta9");
-  function cnt(){var n=it.filter(function(d){return d.getAttribute("aria-checked")==="true";}).length;c.textContent=n+" de "+it.length+(n===it.length?" · listo":"");}
-  it.forEach(function(d){
-    d.className="chk";d.setAttribute("role","checkbox");d.setAttribute("aria-checked","false");d.tabIndex=0;
-    function tg(ev){ev.stopPropagation();d.setAttribute("aria-checked",d.getAttribute("aria-checked")==="true"?"false":"true");cnt();}
-    d.addEventListener("click",tg);
-    d.addEventListener("keydown",function(ev){if(ev.key===" "||ev.key==="Enter"){ev.preventDefault();tg(ev);}});
-  });
-  cnt();
-})();
+}
+function iniciar(){
+  $("revisado").textContent = fLarga(REVISADO);
+  $("enlace-issues").href = REPO + "/issues";
+  $("enlace-codigo").href = REPO + "/tree/main/" + CARPETA;
+  $("json").textContent = JSON.stringify({ revisado: REVISADO, fuentes: FUENTES, hitos: HITOS }, null, 2);
+  $("v-linea").addEventListener("click", function(){ ponerVista("linea"); });
+  $("v-lista").addEventListener("click", function(){ ponerVista("lista"); });
+  $("reiniciar").addEventListener("click", function(){ R = {}; actualizar(); $("p-reg").scrollIntoView({ block: "nearest" }); });
+  pintarFiltros(); pintarLinea(); pintarLista(); pintarDetalle(); ponerVista(vista);
+  actualizar(); pintarCasos(); pintarMitos(); temaInicial();
+  $("aviso-carga").hidden = true;
+}
+iniciar();
 </script>
 </body>
 </html>
